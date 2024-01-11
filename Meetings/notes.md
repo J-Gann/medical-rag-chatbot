@@ -19,3 +19,9 @@
 - Data acquesition for PubMed: https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/
 - Python tool for PubMed: https://pypi.org/project/pymed/
 - Scraping PubMed: https://medium.com/@felipe.odorcyk/scrapping-data-from-pubmed-database-78a9b53de8ca
+
+## 18.12.23
+
+- Meeting with tutor
+- Presented current state of project
+- Already made good progress for first milestone
