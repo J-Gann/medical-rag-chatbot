@@ -1,0 +1,58 @@
+1. Cortex. 2023 Dec 27;172:54-71. doi: 10.1016/j.cortex.2023.11.018. Online ahead
+ of print.
+
+Contributions of listening effort and intelligibility to cortical tracking of 
+speech in adverse listening conditions.
+
+Ershaid H(1), Lizarazu M(2), McLaughlin D(3), Cooke M(4), Simantiraki O(5), 
+Koutsogiannaki M(6), Lallier M(7).
+
+Author information:
+(1)Basque Center on Cognition, Brain and Language, San Sebastian, Spain. 
+Electronic address: h.ershaid@bcbl.eu.
+(2)Basque Center on Cognition, Brain and Language, San Sebastian, Spain. 
+Electronic address: m.lizarazu@bcbl.eu.
+(3)Basque Center on Cognition, Brain and Language, San Sebastian, Spain. 
+Electronic address: d.mclaughlin@bcbl.eu.
+(4)Ikerbasque, Basque Science Foundation, Bilbao, Spain. Electronic address: 
+m.cooke@ikerbasque.org.
+(5)University of the Basque Country, Bilbao, Spain. Electronic address: 
+olympia.simantiraki@ehu.eus.
+(6)Basque Center on Cognition, Brain and Language, San Sebastian, Spain. 
+Electronic address: m.koutsog@gmail.com.
+(7)Basque Center on Cognition, Brain and Language, San Sebastian, Spain; 
+Ikerbasque, Basque Science Foundation, Bilbao, Spain. Electronic address: 
+m.lallier@bcbl.eu.
+
+Cortical tracking of speech is vital for speech segmentation and is linked to 
+speech intelligibility. However, there is no clear consensus as to whether 
+reduced intelligibility leads to a decrease or an increase in cortical speech 
+tracking, warranting further investigation of the factors influencing this 
+relationship. One such factor is listening effort, defined as the cognitive 
+resources necessary for speech comprehension, and reported to have a strong 
+negative correlation with speech intelligibility. Yet, no studies have examined 
+the relationship between speech intelligibility, listening effort, and cortical 
+tracking of speech. The aim of the present study was thus to examine these 
+factors in quiet and distinct adverse listening conditions. Forty-nine normal 
+hearing adults listened to sentences produced casually, presented in quiet and 
+two adverse listening conditions: cafeteria noise and reverberant speech. 
+Electrophysiological responses were registered with electroencephalogram, and 
+listening effort was estimated subjectively using self-reported scores and 
+objectively using pupillometry. Results indicated varying impacts of adverse 
+conditions on intelligibility, listening effort, and cortical tracking of 
+speech, depending on the preservation of the speech temporal envelope. The more 
+distorted envelope in the reverberant condition led to higher listening effort, 
+as reflected in higher subjective scores, increased pupil diameter, and stronger 
+cortical tracking of speech in the delta band. These findings suggest that using 
+measures of listening effort in addition to those of intelligibility is useful 
+for interpreting cortical tracking of speech results. Moreover, reading and 
+phonological skills of participants were positively correlated with listening 
+effort in the cafeteria condition, suggesting a special role of expert language 
+skills in processing speech in this noisy condition. Implications for future 
+research and theories linking atypical cortical tracking of speech and reading 
+disorders are further discussed.
+
+Copyright Â© 2024 Elsevier Ltd. All rights reserved.
+
+DOI: 10.1016/j.cortex.2023.11.018
+PMID: 38215511
