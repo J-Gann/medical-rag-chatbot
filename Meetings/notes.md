@@ -30,3 +30,10 @@
 - Meeting with tutor
 - Presented current state of project
 - Already made good progress for first milestone
+
+## 14.01.24
+
+- Preparing for tutor meeting next day
+- Exchange research and development progress of group members
+- Collect outstanding ToDo´s
+- Collect open questions
