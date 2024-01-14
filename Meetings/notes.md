@@ -36,4 +36,11 @@
 - Preparing for tutor meeting next day
 - Exchange research and development progress of group members
 - Collect outstanding ToDo´s
+  - incorporate all relevant articles (through the Biopython pip module we can only download 10000 articles. Using the linux cli, there is no limit, see the notes in our GitHub project)
+  - use a proper database to manage larger dataset (also use out of the box k-NN algorithm for embedding similarity search)
+  - extend the usage of article metadata (atm I only use the title, article id and abstract)
+  - improve the citation mechanism
+  - improve the prompt design of the llama 2 LLM
+  - maybe experiment with other LLMs
+  - design the user interface (Website + ollama?)
 - Collect open questions
