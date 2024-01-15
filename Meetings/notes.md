@@ -59,6 +59,7 @@
 - feedback from tutor:
   - use vector database -> Chris + Saif working on it
   - performance benefits from ollama for llama 2
+  - take a look at LangChain
   - take a look at laama model temperature
   - tips regarding llama prompt: "answer short and concise"
   - remember that we will eventually have to create a test dataset
@@ -69,6 +70,7 @@
 - recap tutor meeting
 - collect next steps and ToDo´s
   - Saif + Chris
+    - Evaluate if LangChain (https://www.langchain.com/) is a good choice for us
     - get opensearch pipeline with small dataset working (population + retrieval)
     - create large dataset
       - use bash cli: https://www.nlm.nih.gov/dataguide/edirect/install.html#edirect-installation
