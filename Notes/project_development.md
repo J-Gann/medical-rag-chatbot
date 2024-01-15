@@ -36,3 +36,6 @@
 
 - First eperiments to add citation feature by expanding the prompt for LLama
   - Works quite well, however the model tries to include a citation for every model resulting in something like a summarization of each document in the context
+
+- Take a look at paperspace as an alternative to colab
+  - paperspace allows to use local dev environment (VsCode) which is a huge benefit
