@@ -31,6 +31,12 @@
 - Presented current state of project
 - Already made good progress for first milestone
 
+## 12.01.24
+
+- Talked about the current state of the project 
+- Get familar with opensearch 
+- Thoughts about how to implement a GUI (e.g. Qt)
+
 ## 14.01.24
 
 - Preparing for tutor meeting next day
