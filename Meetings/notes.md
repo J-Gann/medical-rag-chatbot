@@ -69,30 +69,30 @@
 - recap tutor meeting
 - collect next steps and ToDo´s
   - Saif + Chris
-          - get opensearch pipeline with small dataset working (population + retrieval)
-          - create large dataset
-            - use bash cli: https://www.nlm.nih.gov/dataguide/edirect/install.html#edirect-installation
-          - preprocess data
-            - filter improtant metadata
-            - sanitize abstract text
-          - find hosting solution for opensearch 
-          - integrate hosted opensearch into project notebook
-            1. retrieval of documents
-            2. similarity measurement of embeddings using k-NN
+    - get opensearch pipeline with small dataset working (population + retrieval)
+    - create large dataset
+      - use bash cli: https://www.nlm.nih.gov/dataguide/edirect/install.html#edirect-installation
+    - preprocess data
+      - filter improtant metadata
+      - sanitize abstract text
+    - find hosting solution for opensearch 
+    - integrate hosted opensearch into project notebook
+      1. retrieval of documents
+      2. similarity measurement of embeddings using k-NN
   
   - Jonas
-          - evaluate which metada is relevant and where to use / integrate it -> resulting preprocessing done by Chris and Saif
-          - extend notebook code to utilize more metadata
-          - work on prompting of llama
-          - improve citation mechanism
-          - improve performance of llama (ollama, llama.cpp)
-          - experiment with model temperature
-          - find solution for deployment of model (ollama, paperspace, huggingface, ...)
+    - evaluate which metada is relevant and where to use / integrate it -> resulting preprocessing done by Chris and Saif
+    - extend notebook code to utilize more metadata
+    - work on prompting of llama
+    - improve citation mechanism
+    - improve performance of llama (ollama, llama.cpp)
+    - experiment with model temperature
+    - find solution for deployment of model (ollama, paperspace, huggingface, ...)
   
   - Open
-          - GUI
-          - creation of test dataset
-          - 15 minute video presenting final system
-          - project report
-          - GitHub readme
+    - GUI
+    - creation of test dataset
+    - 15 minute video presenting final system
+    - project report
+    - GitHub readme
 
