@@ -103,4 +103,5 @@
 - Opensearch 
   - Implemented bulk load in opensearchpy and validated data in opensearch-dashboard  
   - Getting familar with opensearch analyzer for document retrieving
+  - Run opensearch and opensearch-dashboard in docker container 
 
