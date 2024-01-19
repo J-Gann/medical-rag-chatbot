@@ -98,3 +98,9 @@
     - project report
     - GitHub readme
 
+## 19.01.24
+
+- Opensearch 
+  - Implemented bulk load in opensearchpy and validated data in opensearch-dashboard  
+  - Getting familar with opensearch analyzer for document retrieving
+
