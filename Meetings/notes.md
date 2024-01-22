@@ -101,7 +101,19 @@
 ## 19.01.24
 
 - Opensearch 
-  - Implemented bulk load in opensearchpy and validated data in opensearch-dashboard  
+  - Implemented bulk load in opensearchpy and validated data in opensearch-dashboard
   - Getting familar with opensearch analyzer for document retrieving
-  - Run opensearch and opensearch-dashboard in docker container 
+  - Run opensearch and opensearch-dashboard in docker container
 
+## 22.01.24
+- Catch Up
+  - Correct setup of OpenSearch
+    - Using docker
+  - Looking at k-NN for similarity measure
+    - Evaluate performance benefits
+  - Tokenizer von OpenSearch verwenden? Was sind Vorteile?
+  - Hosting opensearch => upload docker image
+    - vercel
+    - netlify
+- LangChain: Evaluate using current assignment
+- Feature to be able to add documents to OpenSearch later
