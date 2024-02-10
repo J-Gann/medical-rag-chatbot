@@ -22,6 +22,8 @@ def generate_response(prompt):
         "stream": False,
         "prompt": full_prompt,
     }
+    
+    print(data)
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
 

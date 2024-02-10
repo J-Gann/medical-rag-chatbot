@@ -13,6 +13,12 @@
     - Used the docker command from this side 
     - Ollama runs on localhost:8080 !
 
+- Using custom model 
+    - https://www.youtube.com/watch?v=3BnnsQCmgLo
+
+- RAG
+    - https://www.youtube.com/watch?v=4HfSfFvLn9Q
+
 - Links 
     - https://medium.com/@balazskocsis/chatting-with-your-documents-in-the-cli-with-ollama-and-llamaindex-13481903f7ef
     - https://github.com/ollama/ollama/blob/main/README.md#import-from-gguf
