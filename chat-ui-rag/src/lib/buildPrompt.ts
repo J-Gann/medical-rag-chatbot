@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import type { WebSearch } from "./types/WebSearch";
 import { downloadFile } from "./server/files/downloadFile";
 import type { Conversation } from "./types/Conversation";
+import query from "./server/rag/pinecone/pineconeEndpoint"
 
 interface buildPromptOptions {
 	messages: Pick<Message, "from" | "content" | "files">[];
@@ -24,6 +25,29 @@ export async function buildPrompt({
 	id,
 }: buildPromptOptions): Promise<string> {
 	let modifiedMessages = [...messages];
+
+	if (model.rag) {
+		const lastUsrMsgIndex = modifiedMessages.map((el) => el.from).lastIndexOf("user");
+		const text = await query({ model: model, question: messages[lastUsrMsgIndex].content })
+		const previousUserMessages = modifiedMessages.filter((el) => el.from === "user").slice(0, -1);
+		const previousQuestions =
+			previousUserMessages.length > 0
+				? `Previous questions: \n${previousUserMessages
+						.map(({ content }) => `- ${content}`)
+						.join("\n")}`
+				: "";
+
+		modifiedMessages[lastUsrMsgIndex] = {
+			from: "user",
+			content: `
+=====================
+${text.join("\n=====================\n")}
+=====================
+
+${previousQuestions}
+Answer the question citing the FULL-AUTHOR and PUBLICATION-DATE where appropriate: ${messages[lastUsrMsgIndex].content}`,
+		};
+	}
 
 	if (webSearch && webSearch.context) {
 		// find index of the last user message
@@ -82,6 +106,15 @@ Answer the question: ${messages[lastUsrMsgIndex].content}`,
 			})
 		);
 	}
+
+	console.log(	
+		model
+			.chatPromptRender({ messages: modifiedMessages, preprompt })
+			// Not super precise, but it's truncated in the model's backend anyway
+			.split(" ")
+			.slice(-(model.parameters?.truncate ?? 0))
+			.join(" ")
+	)
 
 	return (
 		model

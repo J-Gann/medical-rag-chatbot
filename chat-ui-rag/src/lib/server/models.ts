@@ -70,6 +70,11 @@ const modelConfig = z.object({
 	multimodal: z.boolean().default(false),
 	unlisted: z.boolean().default(false),
 	embeddingModel: validateEmbeddingModelByName(embeddingModels).optional(),
+	rag: z
+		.object({
+			vectorStoreType: z.string().min(0),
+			url: z.string().min(0)
+		}).optional()
 });
 
 const modelsRaw = z.array(modelConfig).parse(JSON5.parse(MODELS));
