@@ -1,9 +1,9 @@
 # QA-INLPT-WS2023
 
-1. Start the document-retrieval server: 
+1. Start the document-retrieval server (requires data file located at: https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip?rlkey=hrbuq31wvsou9r8elsfmrxstq&dl=0): 
 
 ``python3 chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.py``
-
+ 
 2. Install chat-ui dependencies
 
 ``cd chat-ui && npm i``
