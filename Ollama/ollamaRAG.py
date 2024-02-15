@@ -34,7 +34,7 @@ else:
     with open(pubmed_data_preprocessed_path, 'r') as f:
         preprocessed_records = json.loads(f.read())
 
-text_list = [record['text'] for record in preprocessed_records[0:1]]
+text_list = [record['text'] for record in preprocessed_records[:]]
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=100, chunk_overlap=5)
 splits = [text_splitter.split_text(str(text)) for text in text_list]

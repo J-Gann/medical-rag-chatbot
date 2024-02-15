@@ -54,8 +54,9 @@ def load_and_retrieve_docs():
     print("embeddings")
 
     #vectorstore = Chroma.from_texts(texts=splits, embedding=embeddings)
-    vectorstore = Chroma.from_documents(documents=documents, embedding=embeddings)
-
+    #vectorstore = Chroma.from_documents(documents=documents, embedding=embeddings)
+    # load from disk
+    vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
     print("vectorstore")
 
     # Create the retriever
