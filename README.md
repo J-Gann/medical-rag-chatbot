@@ -12,7 +12,7 @@
 
 4. Install chat-ui dependencies
 
-``cd chat-ui && npm i``
+``cd chat-ui-rag && npm i``
 
 5. Start mongodb server
 

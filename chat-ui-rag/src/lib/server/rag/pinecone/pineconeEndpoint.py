@@ -15,7 +15,7 @@ device
 records = {}
 missed = 0
 
-with open("pubmed_data") as stream:
+with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data") as stream:
     for article in Medline.parse(stream):
 
         if not "PMID" in article:
