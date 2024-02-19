@@ -20,7 +20,7 @@ Add the whole path if pubmed_data is not detectet
 e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
 """
 
-with open("pubmed_data") as stream:
+with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data") as stream:
     for article in Medline.parse(stream):
 
         if not "PMID" in article:
