@@ -15,7 +15,12 @@ device
 records = {}
 missed = 0
 
-with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data") as stream:
+"""
+Add the whole path if pubmed_data is not detectet
+e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
+"""
+
+with open("pubmed_data") as stream:
     for article in Medline.parse(stream):
 
         if not "PMID" in article:
@@ -47,16 +52,16 @@ pinecone = Pinecone(api_key="7377f10c-e728-4408-b2a6-3ac28daf468f")
 index = pinecone.Index(index_name)
 
 def retrieve_documents(question):
-    results = index.query(vector=model.encode([question])[0].tolist(), top_k=4)
-    return [res["id"] for res in results.matches]
+    results = index.query(vector=model.encode([question])[0].tolist(), top_k=1)
+    return [(res["id"],res["score"]) for res in results.matches]
 
 
 app = FastAPI()
 
 @app.get("/query")
 def generate(question: str):
-    documentIDs = retrieve_documents(question)
-    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n" for id in documentIDs]}
+    documents = retrieve_documents(question)
+    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)}" for id,score in documents]}
 
 
 if __name__ == "__main__":
