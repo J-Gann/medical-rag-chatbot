@@ -46,10 +46,12 @@ ${text.join("\n=====================\n")}
 
 ${previousQuestions}
 Give a short answer. 
-Only give a answer if the score is > 0.5. If this is not the case, answer that you are not sure.  
-State the author name.
-State the publication date. 
-Add the score at the end of the answer with the beginning "The answer document was retrieved with a score of ". ${messages[lastUsrMsgIndex].content}`,
+State the retrieval SCORE, FULL-AUTHOR and 
+PUBLICATION-DATE in a whole paragraph at the end.  
+State the DOCUMENT-ID and DOCUMENT-TITLE of the retrieved article.
+Dont write a summary in the end. 
+
+${messages[lastUsrMsgIndex].content}`,
 		};
 	}
 
@@ -76,7 +78,8 @@ Add the score at the end of the answer with the beginning "The answer document w
 ${webSearch.context}
 =====================
 ${previousQuestions}
-Answer the question: ${messages[lastUsrMsgIndex].content}`,
+Give a short answer. 
+ ${messages[lastUsrMsgIndex].content}`,
 		};
 	}
 	// section to handle potential files input
@@ -113,7 +116,7 @@ Answer the question: ${messages[lastUsrMsgIndex].content}`,
 
 	console.log(	
 		model
-			.chatPromptRender({ messages: modifiedMessages, preprompt })
+			.chatPromptRender({ messages: modifiedMessages})
 			// Not super precise, but it's truncated in the model's backend anyway
 			.split(" ")
 			.slice(-(model.parameters?.truncate ?? 0))
@@ -122,7 +125,7 @@ Answer the question: ${messages[lastUsrMsgIndex].content}`,
 
 	return (
 		model
-			.chatPromptRender({ messages: modifiedMessages, preprompt })
+			.chatPromptRender({ messages: modifiedMessages})
 			// Not super precise, but it's truncated in the model's backend anyway
 			.split(" ")
 			.slice(-(model.parameters?.truncate ?? 0))

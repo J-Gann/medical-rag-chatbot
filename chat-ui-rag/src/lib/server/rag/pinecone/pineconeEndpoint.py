@@ -20,7 +20,7 @@ Add the whole path if pubmed_data is not detectet
 e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
 """
 
-with open("pubmed_data") as stream:
+with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data") as stream:
     for article in Medline.parse(stream):
 
         if not "PMID" in article:
@@ -61,7 +61,9 @@ app = FastAPI()
 @app.get("/query")
 def generate(question: str):
     documents = retrieve_documents(question)
-    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)}" for id,score in documents]}
+    #a,b = documents[0]
+    #print(records[a])
+    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)} \n DOCUMENT-TITLE: {records[id]['TI']}" for id,score in documents]}
 
 
 if __name__ == "__main__":
