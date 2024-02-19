@@ -46,9 +46,9 @@ ${text.join("\n=====================\n")}
 
 ${previousQuestions}
 Give a short answer. 
-State the retrieval score, author name and 
-publication date in a whole paragraph at the end.  
-State the PMID number of the retrieved article.
+State the retrieval SCORE, FULL-AUTHOR and 
+PUBLICATION-DATE in a whole paragraph at the end.  
+State the DOCUMENT-ID and DOCUMENT-TITLE of the retrieved article.
 Dont write a summary in the end. 
 
 ${messages[lastUsrMsgIndex].content}`,
