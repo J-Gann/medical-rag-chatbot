@@ -45,7 +45,11 @@ ${text.join("\n=====================\n")}
 =====================
 
 ${previousQuestions}
-Answer the question citing the FULL-AUTHOR and PUBLICATION-DATE where appropriate: ${messages[lastUsrMsgIndex].content}`,
+Give a short answer. 
+Only give a answer if the score is > 0.5. If this is not the case, answer that you are not sure.  
+State the author name.
+State the publication date. 
+Add the score at the end of the answer with the beginning "The answer document was retrieved with a score of ". ${messages[lastUsrMsgIndex].content}`,
 		};
 	}
 

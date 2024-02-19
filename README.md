@@ -28,6 +28,3 @@
 ``npm run dev``
 
 8. Access chat-ui with browser at **port 5173**
-
-
-
