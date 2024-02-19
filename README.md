@@ -10,19 +10,24 @@
 
 ``ollama pull llama2``
 
-4. Install chat-ui dependencies
+4. Install nodejs (version 20.x)
 
-``cd chat-ui && npm i``
+``curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -``
+``sudo apt-get install -y nodejs``
 
-5. Start mongodb server
+5. Install chat-ui dependencies
+
+``cd chat-ui-rag && npm i``
+
+6. Start mongodb server
 
 ``docker run -d -p 27017:27017 --name mongo-chatui mongo:latest``
 
-6. Start the chat-ui dev server
+7. Start the chat-ui dev server
 
 ``npm run dev``
 
-7. Access chat-ui with browser at **port 5173**
+8. Access chat-ui with browser at **port 5173**
 
 
 
