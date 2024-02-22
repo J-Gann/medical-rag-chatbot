@@ -2,7 +2,13 @@
 
 1. Start the document-retrieval server (requires data file located at: https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip?rlkey=hrbuq31wvsou9r8elsfmrxstq&dl=0): 
 
-``python3 chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.py``
+    Install the required dependencies
+
+    ``pip3 install -r requirements.txt``
+
+    and run the pinecone database
+
+    ``python3 chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.py``
 
 2. Install and run ollama (see: https://github.com/ollama/ollama)
 
