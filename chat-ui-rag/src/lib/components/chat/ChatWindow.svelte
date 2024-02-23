@@ -159,6 +159,7 @@
 			</div>
 		{/if}
 
+
 		<div class="w-full">
 			<div class="flex w-full pb-3">
 				{#if $page.data.settings?.searchEnabled && !assistant}

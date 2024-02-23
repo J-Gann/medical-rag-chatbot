@@ -4,10 +4,10 @@ import { format } from "date-fns";
 import type { WebSearch } from "./types/WebSearch";
 import { downloadFile } from "./server/files/downloadFile";
 import type { Conversation } from "./types/Conversation";
-import query from "./server/rag/pinecone/pineconeEndpoint"
+import query from "./server/rag/endpoints"
 
 interface buildPromptOptions {
-	messages: Pick<Message, "from" | "content" | "files">[];
+	messages: Pick<Message, "from" | "content" | "files">[] ;
 	id?: Conversation["_id"];
 	model: BackendModel;
 	locals?: App.Locals;
@@ -45,7 +45,9 @@ ${text.join("\n=====================\n")}
 =====================
 
 ${previousQuestions}
-Answer the question citing the FULL-AUTHOR and PUBLICATION-DATE where appropriate: ${messages[lastUsrMsgIndex].content}`,
+Answer the question citing the source using the format (FULL-AUTHOR, PUBLICATION-DATE) for example (Sternberg, Robert J, 23 January 2018), when relevant.
+Only use the source if it is relevant for the question. If you do not know the answer to the question, say so.
+The question is: ${messages[lastUsrMsgIndex].content}`
 		};
 	}
 

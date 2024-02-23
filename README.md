@@ -1,6 +1,6 @@
 # QA-INLPT-WS2023
 
-1. Start the document-retrieval server (requires data file located at: https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip?rlkey=hrbuq31wvsou9r8elsfmrxstq&dl=0): 
+1. Start the document-retrieval server (requires data file located at: https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip): 
 
 ``python3 chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.py``
 
@@ -17,6 +17,10 @@
 5. Start mongodb server
 
 ``docker run -d -p 27017:27017 --name mongo-chatui mongo:latest``
+
+6. create .ev.local file with the following line
+
+``MONGODB_URL=mongodb://127.0.0.1:27017``
 
 6. Start the chat-ui dev server
 

@@ -56,7 +56,7 @@ app = FastAPI()
 @app.get("/query")
 def generate(question: str):
     documentIDs = retrieve_documents(question)
-    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n" for id in documentIDs]}
+    return {"answer": [f"FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n" for id in documentIDs]}
 
 
 if __name__ == "__main__":

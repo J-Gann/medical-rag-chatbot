@@ -1,12 +1,8 @@
 import type { BackendModel } from "$lib/server/models";
-
+import type { queryOptions } from "../endpoints"
         
-interface queryOptions {
-    model: BackendModel,
-    question: string
-}
 
-async function query({ model, question }: queryOptions) {
+async function pineconeQuery({ model, question }: queryOptions) {
 	const r = await fetch(`${model.rag!.url}/query?question=${encodeURIComponent(question)}`, {
 			method: "GET",
 			headers: {
@@ -16,4 +12,4 @@ async function query({ model, question }: queryOptions) {
     return (await r.json()).answer
  }
 
- export default query
+ export default pineconeQuery
