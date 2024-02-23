@@ -19,8 +19,8 @@ missed = 0
 Add the whole path if pubmed_data is not detectet
 e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
 """
-
-with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data") as stream:
+PUBMED_PATH = "/home/l0gically/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data.txt"
+with open(PUBMED_PATH) as stream:
     for article in Medline.parse(stream):
 
         if not "PMID" in article:
@@ -42,6 +42,10 @@ with open("/home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinec
         if not "AB" in article:
             missed += 1
             continue
+        if not "SO" in article:
+            missed += 1
+            continue
+        
         
         records[article["PMID"]] = article
 
@@ -63,7 +67,7 @@ def generate(question: str):
     documents = retrieve_documents(question)
     #a,b = documents[0]
     #print(records[a])
-    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)} \n DOCUMENT-TITLE: {records[id]['TI']}" for id,score in documents]}
+    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)} \n DOCUMENT-TITLE: {records[id]['TI']}\n SOURCE: {records[id]['SO'].replace('doi: ', 'https://doi.org/')}" for id,score in documents]}
 
 
 if __name__ == "__main__":

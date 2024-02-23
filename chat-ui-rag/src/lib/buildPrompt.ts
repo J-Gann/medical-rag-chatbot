@@ -48,7 +48,7 @@ ${previousQuestions}
 Give a short answer. 
 State the retrieval SCORE, FULL-AUTHOR and 
 PUBLICATION-DATE in a whole paragraph at the end.  
-State the DOCUMENT-ID and DOCUMENT-TITLE of the retrieved article.
+State the DOCUMENT-ID, DOCUMENT-TITLE and SOURCE of the retrieved article.
 Dont write a summary in the end. 
 
 ${messages[lastUsrMsgIndex].content}`,
