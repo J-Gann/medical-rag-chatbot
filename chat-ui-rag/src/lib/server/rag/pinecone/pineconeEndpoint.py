@@ -19,7 +19,7 @@ missed = 0
 Add the whole path if pubmed_data is not detectet
 e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
 """
-PUBMED_PATH = "/home/l0gically/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data"
+PUBMED_PATH = "/home/l0gically/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data.txt"
 with open(PUBMED_PATH) as stream:
     for article in Medline.parse(stream):
 

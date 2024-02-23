@@ -1,5 +1,5 @@
 # ignore pubmed_data
-chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
+chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data.txt
 
 # Ignore Node.js dependencies
 node_modules/*
