@@ -23,7 +23,7 @@ export async function buildPrompt({
 	webSearch,
 	preprompt,
 	id,
-}: buildPromptOptions): Promise<string> {
+}: buildPromptOptions): Promise<string|any> {
 	let modifiedMessages = [...messages];
 
 	if (model.rag) {
@@ -40,19 +40,24 @@ export async function buildPrompt({
 		modifiedMessages[lastUsrMsgIndex] = {
 			from: "user",
 			content: `
-=====================
-${text.join("\n=====================\n")}
-=====================
 
-${previousQuestions}
-Give a short answer. 
-State the retrieval SCORE, FULL-AUTHOR and 
-PUBLICATION-DATE in a whole paragraph at the end.  
-State the DOCUMENT-ID, DOCUMENT-TITLE and SOURCE of the retrieved article.
-Dont write a summary in the end. 
+${text.text}
 
 ${messages[lastUsrMsgIndex].content}`,
 		};
+		
+
+	return (
+		{
+			"prompt": model
+				.chatPromptRender({ messages: modifiedMessages })
+				// Not super precise, but it's truncated in the model's backend anyway
+				.split(" ")
+				.slice(-(model.parameters?.truncate ?? 0))
+				.join(" "),
+			"source": text.source
+		}
+	);
 	}
 
 	if (webSearch && webSearch.context) {
@@ -113,15 +118,6 @@ Give a short answer.
 			})
 		);
 	}
-
-	console.log(	
-		model
-			.chatPromptRender({ messages: modifiedMessages})
-			// Not super precise, but it's truncated in the model's backend anyway
-			.split(" ")
-			.slice(-(model.parameters?.truncate ?? 0))
-			.join(" ")
-	)
 
 	return (
 		model
