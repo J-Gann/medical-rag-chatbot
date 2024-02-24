@@ -63,7 +63,7 @@ def mean_pooling(last_hidden_state, attention_mask):
 
 host = 'localhost'
 port = 9200
-auth = ('admin', 'admin')
+auth = ('admin', 'qaOllama2')
 
 # Create the client with SSL/TLS enabled, but hostname verification disabled.
 client = OpenSearch(
@@ -80,10 +80,12 @@ index_name = 'pub_med_index'
 
 def retrieve_documents(question):
     
-    inputs = tokenizer(question, return_tensors="pt", padding=True, truncation=True).to(device)
-    query_outputs = mean_pooling(model(**inputs).last_hidden_state, inputs["attention_mask"]).to("cpu")
-    print(len(query_outputs[0].tolist()))
-
+    #inputs = tokenizer(question, return_tensors="pt", padding=True, truncation=True).to(device)
+    #query_outputs = mean_pooling(model(**inputs).last_hidden_state, inputs["attention_mask"]).to(device)
+    
+    model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+    vector=model.encode([question])[0].tolist()
+    
     # Define the KNN search query
     knn_query = {
         "size": 1,
@@ -91,7 +93,7 @@ def retrieve_documents(question):
         "query": {
             "knn": {
                 "vector": {
-                    "vector": query_outputs[0].tolist(),
+                    "vector": vector,
                     "k": 1
                 }
             }
@@ -114,4 +116,4 @@ def generate(question: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("opensearchEndpoint:app", port=9200, log_level="info")
+    uvicorn.run("opensearchEndpoint:app", port=9300, log_level="info")
