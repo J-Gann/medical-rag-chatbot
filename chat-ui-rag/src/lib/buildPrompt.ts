@@ -45,10 +45,13 @@ ${text.join("\n=====================\n")}
 =====================
 
 ${previousQuestions}
-Give a short answer. 
-State the retrieval SCORE, FULL-AUTHOR and 
-PUBLICATION-DATE in a whole paragraph at the end.  
-State the DOCUMENT-ID and DOCUMENT-TITLE of the retrieved article.
+Use the follwing template for all answers. 
+Introduce with "Refering to the document [DOCUMENT-ID], with the title [DOCUMENT-TITLE] ...".
+End with "For more information check [DOCUMENT-TITLE]."
+Keep the answer short.
+Provide a short paragraph with the  
+retrieval SCORE, FULL-AUTHOR and 
+PUBLICATION-DATE.
 Dont write a summary in the end. 
 
 ${messages[lastUsrMsgIndex].content}`,
