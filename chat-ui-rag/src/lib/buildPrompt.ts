@@ -45,7 +45,9 @@ ${text.join("\n=====================\n")}
 =====================
 
 ${previousQuestions}
-Give a short answer. 
+Use the follwing template for all answers. 
+Introduce with "Refering to the document [DOCUMENT-ID], with the title [DOCUMENT-TITLE] ...".
+End with "For more information check [DOCUMENT-TITLE]."
 State the retrieval SCORE, FULL-AUTHOR and 
 PUBLICATION-DATE in a whole paragraph at the end.  
 State the DOCUMENT-ID, DOCUMENT-TITLE and SOURCE of the retrieved article.

@@ -34,3 +34,10 @@
 ``npm run dev``
 
 8. Access chat-ui with browser at **port 5173**
+
+
+9. Start opensearch server
+
+``docker pull opensearchproject/opensearch:2``
+
+`` docker run -d -p 9200:9200 -p 9600:9600 -e "discovery.type=single-node" -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=qaOllama2" opensearchproject/opensearch:latest``
