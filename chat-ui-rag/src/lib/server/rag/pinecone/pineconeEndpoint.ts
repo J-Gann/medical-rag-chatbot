@@ -13,7 +13,7 @@ async function query({ model, question }: queryOptions) {
 				"Content-Type": "application/json",
 			}
         });
-    return (await r.json()).answer
+    return (await r.json())
  }
 
  export default query

@@ -15,11 +15,8 @@ device
 records = {}
 missed = 0
 
-"""
-Add the whole path if pubmed_data is not detectet
-e.g. /home/paperspace/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data
-"""
-PUBMED_PATH = "/home/l0gically/QA-INLPT-WS2023/chat-ui-rag/src/lib/server/rag/pinecone/pubmed_data.txt"
+
+PUBMED_PATH = "./pubmed_data"
 with open(PUBMED_PATH) as stream:
     for article in Medline.parse(stream):
 
@@ -42,6 +39,7 @@ with open(PUBMED_PATH) as stream:
         if not "AB" in article:
             missed += 1
             continue
+
         if not "SO" in article:
             missed += 1
             continue
@@ -65,8 +63,16 @@ app = FastAPI()
 @app.get("/query")
 def generate(question: str):
     documents = retrieve_documents(question)
-    return {"answer": [f"DOCUMENT-ID: {records[id]['PMID']}\n FULL-AUTHOR: {records[id]['FAU']}\n PUBLICATION-DATE: {records[id]['DP']}\n TEXT: {records[id]['AB']}\n SCORE: {round(score,2)} \n DOCUMENT-TITLE: {records[id]['TI']}\n SOURCE: {records[id]['SO'].replace('doi: ', 'https://doi.org/')}" for id,score in documents]}
 
+    documentid, score = documents[0]
+
+    text = records[documentid]['AB']
+
+    source = "\n"+records[documentid]['FAU'][0]+" et al.\n"+records[documentid]['SO'].replace('doi: ', 'https://doi.org/')
+
+    res = {"text": text, "source": source}
+
+    return res
 
 if __name__ == "__main__":
     uvicorn.run("pineconeEndpoint:app", port=5000, log_level="info")

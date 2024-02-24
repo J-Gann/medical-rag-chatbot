@@ -1,6 +1,6 @@
 # QA-INLPT-WS2023
 
-1. Start the document-retrieval server (requires data file located at: https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip?rlkey=hrbuq31wvsou9r8elsfmrxstq&dl=0): 
+1. Start the document-retrieval server (requires data file https://www.dropbox.com/scl/fi/hyrmwrvcjqc5huue84ici/pubmed_data.zip?rlkey=hrbuq31wvsou9r8elsfmrxstq&dl=0 at the current directory): 
 
     Install the required dependencies
 
@@ -12,9 +12,9 @@
 
 2. Install and run ollama (see: https://github.com/ollama/ollama)
 
-3. Download llama2 model
+3. Download biomistral model
 
-``ollama pull llama2``
+``ollama pull cniongolo/biomistral``
 
 4. Install nodejs (version 20.x)
 

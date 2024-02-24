@@ -106,6 +106,7 @@
   - Run opensearch and opensearch-dashboard in docker container
 
 ## 22.01.24
+
 - Catch Up
   - Correct setup of OpenSearch
     - Using docker
@@ -117,3 +118,19 @@
     - netlify
 - LangChain: Evaluate using current assignment
 - Feature to be able to add documents to OpenSearch later
+
+## 08.02.24
+
+- RAG implementation with LangChain and Ollama
+- Paperspace usage for computation increase 
+
+## 15.01.24
+
+- Catch Up 
+  - Implementation chat-ui-rag 
+- Open points
+  - Prompt chaining 
+  - Citing sources 
+  - Retrival score 
+  - Evaluation & Validation 
+

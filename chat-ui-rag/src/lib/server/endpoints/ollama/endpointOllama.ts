@@ -15,12 +15,20 @@ export function endpointOllama(input: z.input<typeof endpointOllamaParametersSch
 	const { url, model, ollamaName } = endpointOllamaParametersSchema.parse(input);
 
 	return async ({ conversation }) => {
-		const prompt = await buildPrompt({
+		const res = await buildPrompt({
 			messages: conversation.messages,
 			webSearch: conversation.messages[conversation.messages.length - 1].webSearch,
 			preprompt: conversation.preprompt,
 			model,
 		});
+
+		const prompt = res["prompt"]
+		let source = ""
+		if (model.rag) {
+			source = res["source"]
+		}
+
+		console.log(prompt)
 
 		const r = await fetch(`${url}/api/generate`, {
 			method: "POST",
@@ -94,7 +102,7 @@ export function endpointOllama(input: z.input<typeof endpointOllamaParametersSch
 							logprob: 0,
 							special: true,
 						},
-						generated_text: generatedText,
+						generated_text: generatedText+"\n"+source,
 						details: null,
 					} satisfies TextGenerationStreamOutput;
 				}
