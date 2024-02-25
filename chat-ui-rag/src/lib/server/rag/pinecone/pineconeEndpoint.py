@@ -70,7 +70,7 @@ def generate(question: str):
 
     source = "\n"+records[documentid]['FAU'][0]+" et al.\n"+records[documentid]['SO'].replace('doi: ', 'https://doi.org/')
 
-    res = {"text": text, "source": source}
+    res = {"text": text, "source": source, "score": score}
 
     return res
 

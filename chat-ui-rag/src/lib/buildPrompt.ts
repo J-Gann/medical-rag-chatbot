@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import type { WebSearch } from "./types/WebSearch";
 import { downloadFile } from "./server/files/downloadFile";
 import type { Conversation } from "./types/Conversation";
-import query from "./server/rag/pinecone/pineconeEndpoint"
+import query from "./server/rag/ragEndpoint"
 
 interface buildPromptOptions {
 	messages: Pick<Message, "from" | "content" | "files">[];
@@ -28,7 +28,7 @@ export async function buildPrompt({
 
 	if (model.rag) {
 		const lastUsrMsgIndex = modifiedMessages.map((el) => el.from).lastIndexOf("user");
-		const text = await query({ model: model, question: messages[lastUsrMsgIndex].content })
+		const response = await query({ model: model, question: messages[lastUsrMsgIndex].content })
 		const previousUserMessages = modifiedMessages.filter((el) => el.from === "user").slice(0, -1);
 		const previousQuestions =
 			previousUserMessages.length > 0
@@ -37,23 +37,25 @@ export async function buildPrompt({
 						.join("\n")}`
 				: "";
 
+		let context = "No context is available."
+		let source = "\nNo reference was found."
+		console.log("/////////////////////////////////////////////////////////////////")
+		console.log("> CONTEXT SCORE:",response.score)
+		if (response.score > 0.5) {
+			context = response.text
+			source = response.source
+		}
+
 		modifiedMessages[lastUsrMsgIndex] = {
 			from: "user",
 			content: `
 
-=====================
-${text.join("\n=====================\n")}
-=====================
-
 ${previousQuestions}
-Use the follwing template for all answers. 
-Introduce with "Refering to the document [DOCUMENT-ID], with the title [DOCUMENT-TITLE] ...".
-End with "For more information check [DOCUMENT-TITLE]."
-State the retrieval SCORE, FULL-AUTHOR and 
-PUBLICATION-DATE in a whole paragraph at the end.  
-State the DOCUMENT-ID, DOCUMENT-TITLE and SOURCE of the retrieved article.
-Dont write a summary in the end. 
 
+=====================
+CONTEXT: 
+${context}
+=====================
 
 ${messages[lastUsrMsgIndex].content}`,
 		};
@@ -67,7 +69,7 @@ ${messages[lastUsrMsgIndex].content}`,
 				.split(" ")
 				.slice(-(model.parameters?.truncate ?? 0))
 				.join(" "),
-			"source": text.source
+			"source": source
 		}
 	);
 	}
