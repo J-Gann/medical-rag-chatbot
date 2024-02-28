@@ -17,24 +17,23 @@ The focus of the project lies on leveraging large language models (LLMs) for con
 
 Often these approaches are used separately, however in this project we utilize a LLM finetuned on biomedical data in combination with a RAG system based on a corpus of medical scientific papers. As will be demonstrated later in this text, LLMs which are finetuned on a context can be nicely expanded by a RAG system of the same context, combining general context knowledge gained during finetuning with more specific knowledge gained trough document retrieval by the RAG system.
 
-In the following report we will first give an over view of existing work which is relevant for the project. After that we will give a detailed explanation of the developed system and its components. Finally, we will present the final results and give an outlook on possible improvements and future work.
+In the following report we will first give an overview of existing work which is relevant for the project. After that we will give a detailed explanation of the developed system and its components. Finally, we will present the final results and give an outlook on possible improvements and future work.
 
 ## Related Work
 
-- What is prior work we rely on?
-- What is the context of our work?
-- What are papers we relied on? What did we do different?
+This section presents previous work, relevant for our project. As this was a software development project with the goal of a "finished product", we heavily used and combined existing models and software. Therefore we will focus on the description of these tools and only briefly cover the underlying scientific work.
+
+### Ollama
+
+### Biomistral
+
+### Chat-Ui
+
+### Pubmed
 
 ## Methods and Approach
 
-- Conceptual details of the system
-- Data preprocessing
-- Developed algorithms
-- Methods used
-- Systems used
-- Be detailed, use figures
-- Express what is good about our approach
-- Baseline approaches?
+In this section we present the developed system in detail, discuss design choices and mention problems and pitfalls we noticed. We will describe the retrieval, preprocessing and storage of the data. We also go into detail about our utilization of pretrained LLMs, how we designed and incorporated a RAG system and how we finalized the system with a user interface. Finally we will briefly go over methods and tools we used during development.
 
 ### Data Retrieval
 
@@ -43,6 +42,12 @@ In the following report we will first give an over view of existing work which i
 - used shell script
 - used medline dataformat => easy for processing, consumes less space
 - what were problems?
+
+We decided to focus on the medical domain for this project. As part of the project description we were guided to use data from Pubmed[^1].
+
+```shell
+esearch -db pubmed -query "intelligence[tiab]" -mindate 2013 -maxdate 2023 | efetch -format medline > ./pubmed_data
+```
 
 ### Data Preprocessing
 
@@ -85,8 +90,25 @@ In the following report we will first give an over view of existing work which i
   - expandable
   - customizable
   - open source
-- what were problems?
-  -
+- ## what were problems?
+
+### Deployment
+
+- did not containerize
+- why?
+- etc.
+
+### Development
+
+- Paperspace
+- Google Colab
+- GitHub
+
+## Collaboration
+
+- Regular meetings
+- What worked, what did not?
+- ...
 
 ## Experiments
 
@@ -141,5 +163,7 @@ In the following report we will first give an over view of existing work which i
 - what have we learned?
 
 ## References
+
+[^1]: https://pubmed.ncbi.nlm.nih.gov/
 
 ## Anti-plagiarism Confirmation
