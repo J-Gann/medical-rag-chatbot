@@ -29,7 +29,7 @@ This section presents previous work, relevant for our project. As this was a sof
 
 ### Chat-Ui
 
-### Pubmed
+### PubMed
 
 ## Methods and Approach
 
@@ -37,20 +37,15 @@ In this section we present the developed system in detail, discuss design choice
 
 ### Data Retrieval
 
-- show used script
-- pip package had limitations
-- used shell script
-- used medline dataformat => easy for processing, consumes less space
-- what were problems?
-
-We decided to focus on the medical domain for this project. As part of the project description we were guided to use data from Pubmed[^1].
+We decided to focus on the medical domain for this project. As part of the project description we were guided to use data from PubMed[^1] and limit ourselves to papers containing the word "intelligence" in either the abstract or the title and a publishing date between 2013 and 2023. At the time of writing, this resulted in 88.486 papers. We initially tried to download the relevant papers using Biopython[^2] but noticed a datacap of 10.000 papers, which was well below our needs. We then discovered EDirect[^3] [^4], a unix command line utility covering the same functionality but without the datacap. Instead of the standard XML format we decided to use Medline as it turned out to be more convenient for us to work with and required less disk space. We used the following command to download the relevant papers.
 
 ```shell
-esearch -db pubmed -query "intelligence[tiab]" -mindate 2013 -maxdate 2023 | efetch -format medline > ./pubmed_data
+./esearch -db pubmed -query "intelligence[tiab]" -mindate 2013 -maxdate 2023 | ./efetch -format medline > ./pubmed_data
 ```
 
 ### Data Preprocessing
 
+- used title, abstract and author
 - what were problems?
 
 ### Data Storage
@@ -90,7 +85,8 @@ esearch -db pubmed -query "intelligence[tiab]" -mindate 2013 -maxdate 2023 | efe
   - expandable
   - customizable
   - open source
-- ## what were problems?
+- what were problems?
+  -
 
 ### Deployment
 
@@ -162,8 +158,9 @@ esearch -db pubmed -query "intelligence[tiab]" -mindate 2013 -maxdate 2023 | efe
 - possible improvements / expansions
 - what have we learned?
 
-## References
+## Anti-plagiarism Confirmation
 
 [^1]: https://pubmed.ncbi.nlm.nih.gov/
-
-## Anti-plagiarism Confirmation
+[^2]: https://biopython.org/
+[^3]: https://www.nlm.nih.gov/dataguide/edirect/install.html
+[^4]: https://www.ncbi.nlm.nih.gov/books/NBK179288/
