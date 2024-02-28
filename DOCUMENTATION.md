@@ -6,6 +6,8 @@
 | Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                |
 | Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                |
 
+Advisor:
+
 ## Introduction
 
 - Project Description
@@ -81,6 +83,7 @@
   - customizable
   - open source
 - what were problems?
+  -
 
 ## Experiments
 
@@ -113,6 +116,20 @@
 - baseline?
 - show examples or numbers
 
+## Contributions
+
+|                   | Data Retrieval | Data Preprocessing | Data Storage | LLM Model | RAG System | Document Reference | User Interface | Experiments |
+| ----------------- | -------------- | ------------------ | ------------ | --------- | ---------- | ------------------ | -------------- | ----------- |
+| Jonas Gann        |                |                    |              |           |            |                    |                |             |
+| Christian Teutsch |                |                    |              |           |            |                    |                |             |
+| Saif Mandour      |                |                    |              |           |            |                    |                |             |
+
+### Jonas Gann
+
+### Christian Teutsch
+
+### Saif Mandour
+
 ## Conclusion and Future Work
 
 - recap main contributions
@@ -121,3 +138,5 @@
 - what have we learned?
 
 ## References
+
+## Anti-plagiarism Confirmation
