@@ -1,10 +1,10 @@
 # Medical Chatbot using finetuned LLM and RAG on Pubmed dataset
 
-|                   | GitHub Handle | E-Mail                       | Studienfach               | Matrikelnummer |
-| ----------------- | ------------- | ---------------------------- | ------------------------- | -------------- |
-| Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576        |
-| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                |
-| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                |
+|                   | GitHub Handle | E-Mail                       | Course of Study           | Matriculation Number |
+| ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
+| Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
+| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                      |
+| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                      |
 
 Advisor:
 
@@ -121,11 +121,13 @@ As we only use at most one paper for a question, we were able to manually append
 
 ### User Interface
 
-We decided to not write a custom user interface as there were many open-source user interfaces available for the use case at hand. We initially looked at user interfaces in the context of Ollama such as Open WebUI"[^11]. However this turned out not to be sufficiently expandable in order to incorporate our RAG system. Therefore we decided to use the extensively customizable Chat-UI[^12].
+We decided to not write a custom user interface as there were many open-source user interfaces available for the use case at hand. We initially looked at user interfaces in the context of Ollama such as Open WebUI[^11]. However this turned out not to be sufficiently expandable in order to incorporate our RAG system. Therefore we decided to use the extensively customizable Chat-UI[^12].
 
 Here we were able to not only customize the models available to the user in a configuration file but also insert custom code, adding new features to the answer generation pipeline. This most notably concerns the "buildPrompt.ts" file in which the main logic regarding the enrichment of the user prompt is contained. Here we added the configurable capability to insert papers retrieved by the RAG system as described in the previous chapter.
 
-<!-- INSERT ui screenshots -->
+![Welcome Page](images/welcome.png)
+
+![UI with answer](images/prompt.png)
 
 ### Deployment
 
