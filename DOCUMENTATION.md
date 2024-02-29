@@ -75,35 +75,57 @@ We found BioMistral to be a perfect fit and fulfill all our expectations. Due to
 
 We eventually settled for the following system prompt for the BioMistral model:
 
-```
-You are a medical assistant. Answer questions truthfully. Base your answer soly on the given information.
+```js
+"You are a medical assistant. Answer questions truthfully. Base your answer soly on the given information.";
 ```
 
 ### RAG System
 
-- embedding of whole abstracts
-- retrieval of most relevant paper (use only if score sufficiently high)
-- text + metadata infused into prompt
-- previous questions (and answers?) inserted into user prompt
-- prompt engineering?
-- what were problems?
+Main part of the RAG system is the retrieval of relevant papers for a given user question, which was already introduced as part of the section "Vector Storage". Next to the paper content, the server also includes the similarity score in its response. In case the similarity score is higher than 0.5 (a value we defined after some experiments) the abstract of the paper is inserted into the user prompt as follows:
 
-### Document Reference
+```js
+`=====================
 
-- source and url inserted into model answer
-- other approaches error prone
-  - prompt engineering
+CONTEXT:
+
+${abstract}
+
+=====================
+
+${userQuestion}`;
+```
+
+If the score is below 0.5, the string "No context available." is inserted instead.
+
+We made the design choice to only retrieve and use the most similar paper. The reason is, that in case of multiple papers being inserted in the prompt, we were not able to instruct the llm model to generate a self-contained answer which met our expectations. Instead the answers would usually be a list of summaries of each paper abstract. We were not satisfied with this behavior and decided a consistent answer based on one paper was more appropriate than a list of summaries of relevant papers.
+
+As we wanted the model to be aware of the chat history we included the previous user questions into the prompt:
+
+```js
+`=====================
+  
+${previousQuestions}
+
+CONTEXT:
+
+${abstract}
+
+=====================
+
+${userQuestion}`;
+```
+
+This enables the model to better understand the intention of the current question of the user. An interesting extension would be to also include previous answers of the model. In that case one would have to make sure, that the prompt does not get too large.
+
+As we only use at most one paper for a question, we were able to manually append the source of the paper to the answer of the model. We experimented with different prompt statements instructing the model to automatically insert a reference to the paper where appropriate but did not find a solution which worked consistently. It would be very interesting to go through current research and incorporate promising approaches into the system.
 
 ### User Interface
 
-- chat-ui (other: ollama based, custom ui)
-- what are cool features?
-  - pretty ui
-  - expandable
-  - customizable
-  - open source
-- what were problems?
-  -
+We decided to not write a custom user interface as there were many open-source user interfaces available for the use case at hand. We initially looked at user interfaces in the context of Ollama such as Open WebUI"[^11]. However this turned out not to be sufficiently expandable in order to incorporate our RAG system. Therefore we decided to use the extensively customizable Chat-UI[^12].
+
+Here we were able to not only customize the models available to the user in a configuration file but also insert custom code, adding new features to the answer generation pipeline. This most notably concerns the "buildPrompt.ts" file in which the main logic regarding the enrichment of the user prompt is contained. Here we added the configurable capability to insert papers retrieved by the RAG system as described in the previous chapter.
+
+<!-- INSERT ui screenshots -->
 
 ### Deployment
 
@@ -187,3 +209,5 @@ You are a medical assistant. Answer questions truthfully. Base your answer soly 
 [^8]: https://ollama.com/
 [^9]: https://www.langchain.com/
 [^10]: https://python.langchain.com/docs/langserve
+[^11]: https://github.com/open-webui/open-webui
+[^12]: https://github.com/huggingface/chat-ui
