@@ -1,5 +1,13 @@
 # Medical Chatbot using finetuned LLM and RAG on Pubmed dataset
 
+|                   | GitHub Handle | E-Mail                       | Course of Study           | Matriculation Number |
+| ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
+| Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
+| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                      |
+| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                      |
+
+Advisor:
+
 This repository contains a medical chatbot using a finetuned LLM and RAG system on a Pubmed dataset.
 
 See the [Documentation](./DOCUMENTATION.md) for more information.
@@ -50,7 +58,7 @@ Here you can find the user interface for the chatbot based on the open-source pr
 
 Here you can find the RAG system used for the chatbot. It provides an endpoint for the chat-ui to query the RAG system for papers relevant to questions posed by the user. The retrieved papers are inserted into the user prompt at [buildPrompt.ts](./chat-ui-rag/src/lib/buildPrompt.ts).
 
-### Data Preprocessing: [DataPreprocessing](./preprocessing.ipynb)
+### Data Preprocessing: [Preprocessing](./preprocessing.ipynb)
 
 This notebook containes the code we used to retrieve and process the Pubmed dataset as well as upload embeddings of the papers to the Pinecone vectorstore.
 
