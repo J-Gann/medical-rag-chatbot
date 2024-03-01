@@ -2,12 +2,8 @@ import torch
 from pinecone import Pinecone
 from sentence_transformers import SentenceTransformer
 from Bio import Medline
-import ollama
 from fastapi import FastAPI
 import uvicorn
-from dotenv import set_key
-from pathlib import Path
-import json
 
 
 if torch.cuda.is_available():
