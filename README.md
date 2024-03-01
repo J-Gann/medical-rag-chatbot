@@ -4,7 +4,7 @@
 | ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
 | Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
 | Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                      |
-| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                      |
+| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
 Advisor:
 
