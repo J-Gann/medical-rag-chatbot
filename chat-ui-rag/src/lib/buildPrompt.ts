@@ -41,7 +41,7 @@ export async function buildPrompt({
 		let source = "\nNo reference was found."
 		console.log("/////////////////////////////////////////////////////////////////")
 		console.log("> CONTEXT SCORE:",response.score)
-		if (response.score > 0.5) {
+		if (response.score > 0.4) {
 			context = response.text
 			source = response.source
 		}
@@ -132,7 +132,6 @@ Give a short answer.
 			})
 		);
 	}
-
 	return (
 		model
 			.chatPromptRender({ messages: modifiedMessages})
