@@ -4,7 +4,7 @@
 | ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
 | Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
 | Christian Teutsch | @chTeut       | christian.teutsch@outlook.de | Data and Computer Science | 3729420              |
-| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        |                           |                      |
+| Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
 Advisor:
 
@@ -42,7 +42,7 @@ In this section we present the developed system in detail, discuss design choice
 
 ### Overall Design Choices
 
-In this project we focused on delivering a finished project which could actually be useful in its intended domain. Therefore we decided to not approach the project as a research project but as a software development project. This means we focused on the development of a system which is capable of answering questions in the medical domain. We did not focus on the development of new models or algorithms but rather on the integration of existing models and tools. We also focused on the possibility of future expansion of the code by using open-source tools and adding new features in an expandable way. With regards to the behaviour of the answer generation we favoured consistency and reliability instead of the highest possible answer quality.
+In this project we focused on delivering a finished project which could actually be useful in its intended domain. Therefore we decided to not approach the project as a research project but as a software development project. This means we focused on the development of a system which is capable of answering questions in the medical domain. We did not focus on the development of new models or algorithms but rather on the integration of existing models and tools. We also focused on the possibility of future expansion of the code by using open-source tools and adding new features in an expandable way. With regards to the behaviour of the answer generation we favoured simplicity, consistency and reliability instead of the highest possible answer quality.
 
 ### Data Retrieval
 
@@ -60,7 +60,7 @@ As mentioned in the previous section, we already filtered the data to be publish
 
 In order to query relevant papers for a given user question, we decided to compute an embedding for each paper. These embedding store the semantic content of a paper in form of a vector. One can calculate the cosine similarity between embeddings of the paper-abstracts and the embedding of a user question to find papers with similar content to the question. To further improve the semantic content of the embedding, one could not only incorporate the abstract of the paper into the embedding but also relevant metadata such as the names of the authors as well as the publication date.
 Once ambeddings are pre-computed for all papers, they can be used to find relevant papers for all coming user questions by computing their embedding similarity. There exist specialized software tools which make these computations easy and efficient. One of the so called "vectorstores" is Pinecone[^5]. It enables cloud storage of embeddings and provides an API for easily querying the top-k most similar embeddings for a given user question.
-The alternative to a fully hosted service such as Pinecone is to use a locally running system like OpenSearch[^6].
+The alternative to a fully hosted service such as Pinecone is to use a locally running system like OpenSearch[^6]. It is highly costumizable and enables storing embeddings with the sources. The REST API makes is easy to query the top-k similar embeddings and because it runs locally it runs much faster than for document retrival and later references.
 
 <!-- MORE about OpenSearch -->
 
@@ -135,7 +135,6 @@ Here we were able to not only customize the models available to the user in a co
 ![UI with answer](evaluation/images/prompt.png)
 
 ### Deployment
-
 - did not containerize
 - why?
 - etc.
