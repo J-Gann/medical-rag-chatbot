@@ -183,7 +183,7 @@ We compared the sentiment analysis of questions that should be answered with eit
 - quantitative or qualitative
 
 ### Experimental Details
-We used the follwing prompts to generate the QA's in Chat-GPT.  
+We used the follwing prompts to generate the QA's in Chat-GPT.  Forthermore we set the retrieval score threshold to 0.4. This means that we dont provide the user not source linke if the retrieval score is less than 0.4.
 
 1. Generation of PubMed related QA's
 
@@ -244,11 +244,11 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 
 | Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
 | --------- | -------- | ------- | ---------- | ----- | ------- |--------|
-|     1     | correct? | correct?|    0.94    | 0.48  |         |   Yes  |
-|     2     | correct? | correct?|    0.79    | 0.43  |         |   Yes  |
-|     3     | correct? | correct?|    0.86    | 0.36  |         |    No  |
-|     4     | correct? | correct?|    0.83    | 0.26  |         |    No  |
-|     5     | correct? | correct?|    0.95    | 0.53  |         |   Yes  |
+|     1     | correct  | correct |    0.94    | 0.48  |         |   Yes  |
+|     2     | correct  | correct |    0.79    | 0.43  |         |   Yes  |
+|     3     | correct  | correct |    0.86    | 0.36  |         |    No  |
+|     4     | correct  | correct |    0.83    | 0.26  |         |    No  |
+|     5     | correct  | correct |    0.95    | 0.53  |         |   Yes  |
 
 3. Sentiment analysis
 
@@ -296,6 +296,16 @@ We calculated the similarity of the answers for all questions. The retrieval sco
        21. RAG provides a long answer that is not the abstract of the source. Both answers are on the same topic, but Chat-GPT is shorter and more precise.
        22. RAG is again more detailed in the answer. However, both answers are similar. 
        23. Both answers state that intelligence and cognitive functions differ. 
+
+2. Generated unrelated QA's
+
+       1. Both answers are similar, but RAG is more detailed. It also refers to a source with a retrieval score of 0.48. However, the two answers' similarity is higher than all similarities from the related Q&A's. Both answers start with the same eleven letters, which can influence the high similarity score. Also interesting to note is that the provided source document for the RAG is about the workspace of a radiologist, and home office is not mentioned. But both productivity improvement strategies might be similar.
+       2. Both answers are similar, with a similarity score of 0.79. It turns out that the retrieved document has good information to generate an answer, even if the retrieval score is relatively low. The RAG answer is more detailed than the Chat-GPT answer, but both mention similar topics.
+       3. Similar to question 2, the similarity score of the two questions is high. And also the retrieval score is quite low, but the provided answer is detailed and correct.
+       4. Both answers refer to the Roman Empire. We checked the recommended authors and book titles. The author Susan Wise Bauer and the book title recommended from Chat-GPT exist. The author Paul Erdkamp recommended from RAG exists, but we didn't find the book. Only books which are related to the Roman Empire but with other titles. Again RAG is more detailed and recommend other authors as well. Were some exist and some not. 
+       5. Both answers are similar with a similarity score of 0.95. Also the retrieval score higher than the other unrelated questions. 
+
+We assume that BioMistral is able to generate good answers to non-PubMed-related data because it's based on the underlying Mistral model. It's interesting to see that the similarity seems to be higher with smaller retrieval scores. We think that the model adds more information from the Mistral model if the retrieved document does not provide good information for the given questions. It's also good to see that the generated unrelated Q&A's retrieval scores are all smaller than the generated questions for the related. This shows that we generated the Q&A's correctly, even if they are sometimes a bit related to medical issues.
 
 Why do we sometimes get the abstract as an answer???
 
