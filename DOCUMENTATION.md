@@ -155,20 +155,115 @@ Here we were able to not only customize the models available to the user in a co
 
 ### Data
 
+The data was retrieved as described in the Data Retrieval section. Each entry contains 20 different meta-information fields. We decided to use the unique PubMed identification PMID to identify our documents in the vector database. The abstract (AB) is used to generate the word embedding to calculate similarity between documents and the question query. We also provide the source (SO) by concatenating it with the first author's (FAU) name. Additionally, we save the title (TI) and the date of publication (DP).
+
+We used t
 - what data used for project (medline data format)
 - when, how, where (already mentioned in Approach?)
 - metrics of data
 
 ### Evaluation Method
 
+We used three different evaluation settings. 
+
+1. Generation of PubMed related questions and answers (QA's) 
+
+The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score and the grammar of the generated question of the RAG system.
+
+2. Generated unrelated QA's 
+
+We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table ???.
+
+3. Sentiment analysis 
+
+We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table ???.
+
+
 - explain how performance is evaluated
 - quantitative or qualitative
 
 ### Experimental Details
+We used the follwing prompts to generate the QA's in Chat-GPT.  
+
+1. Generation of PubMed related QA's
+
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
+User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
+
+2. Generated unrelated QA's
+
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
+User: "Can you answer the 5 questions?"
+
+3. Sentiment analysis
+
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
+User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
+User: "Can you proviide 10 questions and answers which have a positive or negative answer? It must be possible to answer with yes or no."
+
 
 - used some configurable evaluation?
 
+
 ### Results
+
+1. Generation of PubMed related QA's
+
+We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
+
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
+| --------- | -------- | ------- | ---------- | ----- | ------- |
+|     1     |  correct | correct |    0.80    | 0.69  |         |
+|     2     |  correct | correct?|    0.75    | 0.63  |         |
+|     3     |  correct |   error |   -0.12    |       |         |
+|     4     |  correct |   error |   -0.05    |       |         |
+|     5     |  correct |   error |   -0.11    |       |         |
+|     6     |  correct | correct?|    0.68    | 0.71  |         |
+|     7     |  correct | correct?|    0.80    | 0.73  |         |
+|     8     |  correct | correct?|    0.68    | 0.73  |         |
+|     9     |  correct | correct?|    0.80    | 0.72  |         |
+|    10     |  correct | correct?|    0.66    | 0.69  |         |
+|    11     |  correct | correct?|    0.76    | 0.62  |         |
+|    12     |  correct | correct?|    0.67    | 0.62  |         |
+|    13     |  correct | correct?|    0.82    | 0.74  |         |
+|    14     |  correct | correct?|    0.84    | 0.73  |         |
+|    15     |  correct | correct?|    0.85    | 0.71  |         |
+|    16     |  correct | correct?|    0.87    | 0.63  |         |
+|    17     |  correct | correct?|    0.64    | 0.70  |         |
+|    18     |  correct | correct?|    0.85    | 0.61  |         |
+|    19     |  correct | correct?|    0.72    | 0.68  |         |
+|    20     |  correct |   error |   -0.09    |       |         |
+|    21     |  correct | correct?|    0.62    | 0.67  |         |
+|    22     |  correct | correct?|    0.61    | 0.68  |         |
+|    23     |  correct | correct?|    0.82    | 0.68  |         |
+
+2. Generated unrelated QA's
+
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
+| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
+|     1     | correct? | correct?|    0.94    | 0.48  |         |   Yes  |
+|     2     | correct? | correct?|    0.79    | 0.43  |         |   Yes  |
+|     3     | correct? | correct?|    0.86    | 0.36  |         |    No  |
+|     4     | correct? | correct?|    0.83    | 0.26  |         |    No  |
+|     5     | correct? | correct?|    0.95    | 0.53  |         |   Yes  |
+
+3. Sentiment analysis
+
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
+| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
+|     1     |    Yes   |    No   |    0.0     | 0.63  |         |   Yes  |
+|     2     |    Yes   |   Yes   |    1.0     | 0.70  |         |   Yes  |
+|     3     |    Yes   |   Yes   |    1.0     | 0.71  |         |   Yes  |
+|     4     |    Yes   |    No   |    0.0     | 0.67  |         |   Yes  |
+|     5     |    Yes   |  Unsure |    0.5     | 0.79  |         |   Yes  |
+|     6     |     No   |    No   |    1.0     | 0.76  |         |   Yes  |
+|     7     |    Yes   |   Yes   |    1.0     | 0.72  |         |   Yes  |
+|     8     |     No   |  Unsure |    0.5     | 0.66  |         |   Yes  |
+|     9     |     No   |    No   |    1.0     | 0.63  |         |   Yes  |
+|    10     |     No   |    No   |    1.0     | 0.77  |         |   Yes  |
 
 - baseline comparison?
 - tables, plots?
@@ -176,34 +271,16 @@ Here we were able to not only customize the models available to the user in a co
 
 ### Analysis
 
-The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json. 
+1. Generation of PubMed related QA's
 
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
-| --------- | -------- | ------- | ---------- | ----- | ------- |
-|     1     | correct? | correct?|    0.80    | 0.69  |         |
-|     2     | correct? | correct?|    0.75    | 0.63  |         |
-|     3     | correct? | correct?|   -0.12    |       |         |
-|     4     | correct? | correct?|   -0.05    |       |         |
-|     5     | correct? | correct?|   -0.11    |       |         |
-|     6     | correct? | correct?|    0.68    | 0.71  |         |
-|     7     | correct? | correct?|    0.80    | 0.73  |         |
-|     8     | correct? | correct?|    0.68    | 0.73  |         |
-|     9     | correct? | correct?|    0.80    | 0.72  |         |
-|    10     | correct? | correct?|    0.66    | 0.69  |         |
-|    11     | correct? | correct?|    0.76    | 0.62  |         |
-|    12     | correct? | correct?|    0.67    | 0.62  |         |
-|    13     | correct? | correct?|    0.82    | 0.74  |         |
-|    14     | correct? | correct?|    0.84    | 0.73  |         |
-|    15     | correct? | correct?|    0.85    | 0.71  |         |
-|    16     | correct? | correct?|    0.87    | 0.63  |         |
-|    17     | correct? | correct?|    0.64    | 0.70  |         |
-|    18     | correct? | correct?|    0.85    | 0.61  |         |
-|    19     | correct? | correct?|    0.72    | 0.68  |         |
-|    20     | correct? | correct?|   -0.09    |       |         |
-|    21     | correct? | correct?|    0.62    | 0.67  |         |
-|    22     | correct? | correct?|    0.61    | 0.68  |         |
-|    23     | correct? | correct?|    0.82    | 0.68  |         |
+       1. Question: Both answers contain the words problem-solving, resoning and ability to learn. However RAG mentioned that there is no definition of intelligence in medical context. Chat-GPT defines it in the answers.
+       2. Question:    
 
+Why do we sometimes get the abstract as an answer???
+
+Unrelated questions -> Lower retrieval score, higher similiarity.
+
+How to handle documents which are published after February 2022 (Chat-GPT knowledge state)?
 
 - qualitative analysis
 - consistency?
