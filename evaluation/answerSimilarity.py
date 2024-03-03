@@ -1,16 +1,27 @@
-import spacy
+import json
+import torch
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
-nlp = spacy.load("en_core_web_sm")
+if torch.cuda.is_available():
+  device = "cuda:0"
+else:
+  device = "cpu"
 
-# Generated answers 
-chat_ui_answer= "..."
-chat_gpt_answer = "The neurobiological mechanisms underlying intelligence are complex and involve multiple brain regions, including the prefrontal cortex, parietal cortex, and hippocampus. These regions are involved in various cognitive functions such as memory, attention, and problem-solving."
+# Load the JSON data
+with open('QAs.json', 'r') as file:
+    data = json.load(file)
 
-# answer processing 
-answer1 = nlp(chat_ui_answer)
-answer2 = nlp(chat_gpt_answer)
-
-# Answer similarity 
-similarity = answer1.similarity(answer2)
-
-print(f"Similarity between the two sentences: {similarity}")
+for i in range(len(data)):
+    
+    embedding1 = np.array(data[str(i+1)]['embeddings']['CHAT-GPT'][1:-1].split(','), dtype=float)
+    embedding2 = np.array(data[str(i+1)]['embeddings']['RAG'][1:-1].split(','), dtype=float)
+    
+    embedding1 = embedding1.reshape(1, -1)
+    embedding2 = embedding2.reshape(1, -1)
+    
+    data[str(i+1)]['similarity'] = cosine_similarity(embedding1, embedding2)[0][0]
+        
+# Save the updated JSON data
+with open('QAs.json', 'w') as file:
+    json.dump(data, file, indent=4)

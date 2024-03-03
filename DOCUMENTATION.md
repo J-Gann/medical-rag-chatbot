@@ -176,6 +176,35 @@ Here we were able to not only customize the models available to the user in a co
 
 ### Analysis
 
+The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json. 
+
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
+| --------- | -------- | ------- | ---------- | ----- | ------- |
+|     1     | correct? | correct?|    0.80    | 0.69  |         |
+|     2     | correct? | correct?|    0.75    | 0.63  |         |
+|     3     | correct? | correct?|   -0.12    |       |         |
+|     4     | correct? | correct?|   -0.05    |       |         |
+|     5     | correct? | correct?|   -0.11    |       |         |
+|     6     | correct? | correct?|    0.68    | 0.71  |         |
+|     7     | correct? | correct?|    0.80    | 0.73  |         |
+|     8     | correct? | correct?|    0.68    | 0.73  |         |
+|     9     | correct? | correct?|    0.80    | 0.72  |         |
+|    10     | correct? | correct?|    0.66    | 0.69  |         |
+|    11     | correct? | correct?|    0.76    | 0.62  |         |
+|    12     | correct? | correct?|    0.67    | 0.62  |         |
+|    13     | correct? | correct?|    0.82    | 0.74  |         |
+|    14     | correct? | correct?|    0.84    | 0.73  |         |
+|    15     | correct? | correct?|    0.85    | 0.71  |         |
+|    16     | correct? | correct?|    0.87    | 0.63  |         |
+|    17     | correct? | correct?|    0.64    | 0.70  |         |
+|    18     | correct? | correct?|    0.85    | 0.61  |         |
+|    19     | correct? | correct?|    0.72    | 0.68  |         |
+|    20     | correct? | correct?|   -0.09    |       |         |
+|    21     | correct? | correct?|    0.62    | 0.67  |         |
+|    22     | correct? | correct?|    0.61    | 0.68  |         |
+|    23     | correct? | correct?|    0.82    | 0.68  |         |
+
+
 - qualitative analysis
 - consistency?
 - surprising fails?
