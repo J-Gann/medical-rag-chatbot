@@ -157,18 +157,14 @@ Here we were able to not only customize the models available to the user in a co
 
 The data was retrieved as described in the Data Retrieval section. Each entry contains 20 different meta-information fields. We decided to use the unique PubMed identification PMID to identify our documents in the vector database. The abstract (AB) is used to generate the word embedding to calculate similarity between documents and the question query. We also provide the source (SO) by concatenating it with the first author's (FAU) name. Additionally, we save the title (TI) and the date of publication (DP).
 
-We used t
-- what data used for project (medline data format)
-- when, how, where (already mentioned in Approach?)
-- metrics of data
-
 ### Evaluation Method
 
 We used three different evaluation settings. 
 
 1. Generation of PubMed related questions and answers (QA's) 
 
-The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score and the grammar of the generated question of the RAG system.
+The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score the generated question of the RAG system.
+Note, we use a retrieval score threshold to filter sources with a lower retrieval score. 
 
 2. Generated unrelated QA's 
 
@@ -178,20 +174,20 @@ We used QA's pairs that are unrelated to a medical context to assess how the Bio
 
 We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table ???.
 
-
-- explain how performance is evaluated
-- quantitative or qualitative
-
 ### Experimental Details
 We used the follwing prompts to generate the QA's in Chat-GPT.  Forthermore we set the retrieval score threshold to 0.4. This means that we dont provide the user not source linke if the retrieval score is less than 0.4.
 
 1. Generation of PubMed related QA's
+
+We generated the PubMed related QA's with the follwing prompts.
 
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
 
 2. Generated unrelated QA's
+
+We generated the PubMed unrelated QA's with the follwing prompts.
 
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
@@ -199,14 +195,12 @@ User: "Can you answer the 5 questions?"
 
 3. Sentiment analysis
 
+We generated the sentiment analysis QA's with the follwing prompts.
+
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
 User: "Can you proviide 10 questions and answers which have a positive or negative answer? It must be possible to answer with yes or no."
-
-
-- used some configurable evaluation?
-
 
 ### Results
 
@@ -214,60 +208,59 @@ User: "Can you proviide 10 questions and answers which have a positive or negati
 
 We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
 
-| Question  | Chat-GPT |   RAG    | Similarity | Score | Grammar |
-| --------- | -------- | -------- | ---------- | ----- | ------- |
-|     1     |  correct | correct  |    0.80    | 0.69  |         |
-|     2     |  correct | correct  |    0.75    | 0.63  |         |
-|     3     |  correct |   error  |   -0.12    |       |         |
-|     4     |  correct |   error  |   -0.05    |       |         |
-|     5     |  correct |   error  |   -0.11    |       |         |
-|     6     |  correct |unprecise |    0.68    | 0.71  |         |
-|     7     |  differs | differs  |    0.80    | 0.73  |         |
-|     8     |  correct |incorrect |    0.68    | 0.73  |         |
-|     9     |  correct | correct  |    0.80    | 0.72  |         |
-|    10     |  correct | correct  |    0.66    | 0.69  |         |
-|    11     |  correct | correct  |    0.76    | 0.62  |         |
-|    12     |  correct | correct  |    0.67    | 0.62  |         |
-|    13     |  correct |unprecise |    0.82    | 0.74  |         |
-|    14     |  correct | correct  |    0.84    | 0.73  |         |
-|    15     |  correct | correct  |    0.85    | 0.71  |         |
-|    16     |  correct | correct  |    0.87    | 0.63  |         |
-|    17     |  correct | aborted  |    0.64    | 0.70  |         |
-|    18     |  correct | correct  |    0.85    | 0.61  |         |
-|    19     |  correct | correct  |    0.72    | 0.68  |         |
-|    20     |  correct |   error  |   -0.09    |       |         |
-|    21     |  correct |unprecise |    0.62    | 0.67  |         |
-|    22     |  correct | correct  |    0.61    | 0.68  |         |
-|    23     |  correct | correct  |    0.82    | 0.68  |         |
+| Question  | Chat-GPT |   RAG    | Similarity | Score | 
+| --------- | -------- | -------- | ---------- | ----- |  
+|     1     |  correct | correct  |    0.80    | 0.69  |    
+|     2     |  correct | correct  |    0.75    | 0.63  |     
+|     3     |  correct |   error  |   -0.12    |       |  
+|     4     |  correct |   error  |   -0.05    |       |   
+|     5     |  correct |   error  |   -0.11    |       |     
+|     6     |  correct |unprecise |    0.68    | 0.71  |         
+|     7     |  differs | differs  |    0.80    | 0.73  |         
+|     8     |  correct |incorrect |    0.68    | 0.73  |         
+|     9     |  correct | correct  |    0.80    | 0.72  |         
+|    10     |  correct | correct  |    0.66    | 0.69  |         
+|    11     |  correct | correct  |    0.76    | 0.62  |         
+|    12     |  correct | correct  |    0.67    | 0.62  |         
+|    13     |  correct |unprecise |    0.82    | 0.74  |         
+|    14     |  correct | correct  |    0.84    | 0.73  |         
+|    15     |  correct | correct  |    0.85    | 0.71  |         
+|    16     |  correct | correct  |    0.87    | 0.63  |         
+|    17     |  correct | aborted  |    0.64    | 0.70  |         
+|    18     |  correct | correct  |    0.85    | 0.61  |         
+|    19     |  correct | correct  |    0.72    | 0.68  |         
+|    20     |  correct |   error  |   -0.09    |       |         
+|    21     |  correct |unprecise |    0.62    | 0.67  |         
+|    22     |  correct | correct  |    0.61    | 0.68  |         
+|    23     |  correct | correct  |    0.82    | 0.68  |         
 
 2. Generated unrelated QA's
 
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
-| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
-|     1     | correct  | correct |    0.94    | 0.48  |         |   Yes  |
-|     2     | correct  | correct |    0.79    | 0.43  |         |   Yes  |
-|     3     | correct  | correct |    0.86    | 0.36  |         |    No  |
-|     4     | correct  | correct |    0.83    | 0.26  |         |    No  |
-|     5     | correct  | correct |    0.95    | 0.53  |         |   Yes  |
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| --------- | -------- | ------- | ---------- | ----- | -------|
+|     1     | correct  | correct |    0.94    | 0.48  |   Yes  |
+|     2     | correct  | correct |    0.79    | 0.43  |   Yes  |
+|     3     | correct  | correct |    0.86    | 0.36  |    No  |
+|     4     | correct  | correct |    0.83    | 0.26  |    No  |
+|     5     | correct  | correct |    0.95    | 0.53  |   Yes  |
 
 3. Sentiment analysis
 
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
-| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
-|     1     |    Yes   |    No   |    0.0     | 0.63  |         |   Yes  |
-|     2     |    Yes   |   Yes   |    1.0     | 0.70  |         |   Yes  |
-|     3     |    Yes   |   Yes   |    1.0     | 0.71  |         |   Yes  |
-|     4     |    Yes   |    No   |    0.0     | 0.67  |         |   Yes  |
-|     5     |    Yes   |  Unsure |    0.5     | 0.79  |         |   Yes  |
-|     6     |     No   |    No   |    1.0     | 0.76  |         |   Yes  |
-|     7     |    Yes   |   Yes   |    1.0     | 0.72  |         |   Yes  |
-|     8     |     No   |  Unsure |    0.5     | 0.66  |         |   Yes  |
-|     9     |     No   |    No   |    1.0     | 0.63  |         |   Yes  |
-|    10     |     No   |    No   |    1.0     | 0.77  |         |   Yes  |
+We assume that the same answer results in a Similarity of 1, the opposite 0 and a undefined answer of the RAG as Unsure. 
 
-- baseline comparison?
-- tables, plots?
-- expectations vs. reality?
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| --------- | -------- | ------- | ---------- | ----- | -------|
+|     1     |    Yes   |    No   |    0.0     | 0.63  |   Yes  |
+|     2     |    Yes   |   Yes   |    1.0     | 0.70  |   Yes  |
+|     3     |    Yes   |   Yes   |    1.0     | 0.71  |   Yes  |
+|     4     |    Yes   |    No   |    0.0     | 0.67  |   Yes  |
+|     5     |    Yes   |  Unsure |    0.5     | 0.79  |   Yes  |
+|     6     |     No   |    No   |    1.0     | 0.76  |   Yes  |
+|     7     |    Yes   |   Yes   |    1.0     | 0.72  |   Yes  |
+|     8     |     No   |  Unsure |    0.5     | 0.66  |   Yes  |
+|     9     |     No   |    No   |    1.0     | 0.63  |   Yes  |
+|    10     |     No   |    No   |    1.0     | 0.77  |   Yes  |
+
 
 ### Analysis
 
@@ -307,17 +300,11 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 
 We assume that BioMistral is able to generate good answers to non-PubMed-related data because it's based on the underlying Mistral model. It's interesting to see that the similarity seems to be higher with smaller retrieval scores. We think that the model adds more information from the Mistral model if the retrieved document does not provide good information for the given questions. It's also good to see that the generated unrelated Q&A's retrieval scores are all smaller than the generated questions for the related. This shows that we generated the Q&A's correctly, even if they are sometimes a bit related to medical issues.
 
-Why do we sometimes get the abstract as an answer???
+3. Sentiment analysis
 
-Unrelated questions -> Lower retrieval score, higher similiarity.
+We see that 4 of ten questions are answered differently.
+In question 1 RAG mentioned that it is not possible to improve intelligence through education and cognitive training. This is interesting because the RAG answered the question 7 from related QA's in the opposite way. In question 4, it's asked if it possible to accurately measure intelligence by using standardized tests. We think that in this case RAG is correct with answering the question with no. Which means that Chat-GPT is wrong. In question 5, RAG is unsure to give a true or false answer. The question is if socioeconomic factors influence intelligence. We think RAG is correct because it's not really easy to state a yes or no answer to this question. The question 8 asked if intelligence is a fixed trait that remains constant throughout. We go again with RAG and think that the answer is too complex to answer it with yes or no.
 
-How to handle documents which are published after February 2022 (Chat-GPT knowledge state)?
-
-- qualitative analysis
-- consistency?
-- surprising fails?
-- baseline?
-- show examples or numbers
 
 ## Contributions
 
