@@ -135,12 +135,11 @@ Here we were able to not only customize the models available to the user in a co
 ![UI with answer](evaluation/images/prompt.png)
 
 ### Deployment
-- did not containerize
-- why?
-- etc.
+We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example. 
 
 ### Development
 
+The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25].
 - Paperspace
 - Google Colab
 - GitHub
@@ -294,7 +293,7 @@ How to handle documents which are published after February 2022 (Chat-GPT knowle
 | ----------------- | -------------- | ------------------ | ------------ | --------- | ---------- | ------------------ | -------------- | ----------- |
 | Jonas Gann        |                |                    |              |           |            |                    |                |             |
 | Christian Teutsch |                |                    |              |           |            |                    |                |             |
-| Saif Mandour      |                |                    |              |           |            |                    |                |             |
+| Saif Mandour      |                |          x         |       x      |     x     |            |        x           |                |      x      |
 
 ### Jonas Gann
 
@@ -341,8 +340,9 @@ How to handle documents which are published after February 2022 (Chat-GPT knowle
        https://arxiv.org/abs/2310.06825 
 [^21]: https://kit.svelte.dev/ 
 [^22]: https://www.docker.com/
-
-
+[^23]: https://nodejs.org/docs/latest/api/
+[^24]: https://pm2.keymetrics.io/
+[^25]: https://httpd.apache.org/docs/2.4/de/
 
 
 
