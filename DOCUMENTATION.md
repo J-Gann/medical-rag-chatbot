@@ -214,31 +214,31 @@ User: "Can you proviide 10 questions and answers which have a positive or negati
 
 We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
 
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
-| --------- | -------- | ------- | ---------- | ----- | ------- |
-|     1     |  correct | correct |    0.80    | 0.69  |         |
-|     2     |  correct | correct |    0.75    | 0.63  |         |
-|     3     |  correct |   error |   -0.12    |       |         |
-|     4     |  correct |   error |   -0.05    |       |         |
-|     5     |  correct |   error |   -0.11    |       |         |
-|     6     |  correct | correct?|    0.68    | 0.71  |         |
-|     7     |  correct | correct?|    0.80    | 0.73  |         |
-|     8     |  correct | correct?|    0.68    | 0.73  |         |
-|     9     |  correct | correct?|    0.80    | 0.72  |         |
-|    10     |  correct | correct?|    0.66    | 0.69  |         |
-|    11     |  correct | correct?|    0.76    | 0.62  |         |
-|    12     |  correct | correct?|    0.67    | 0.62  |         |
-|    13     |  correct | correct?|    0.82    | 0.74  |         |
-|    14     |  correct | correct?|    0.84    | 0.73  |         |
-|    15     |  correct | correct?|    0.85    | 0.71  |         |
-|    16     |  correct | correct?|    0.87    | 0.63  |         |
-|    17     |  correct | correct?|    0.64    | 0.70  |         |
-|    18     |  correct | correct?|    0.85    | 0.61  |         |
-|    19     |  correct | correct?|    0.72    | 0.68  |         |
-|    20     |  correct |   error |   -0.09    |       |         |
-|    21     |  correct | correct?|    0.62    | 0.67  |         |
-|    22     |  correct | correct?|    0.61    | 0.68  |         |
-|    23     |  correct | correct?|    0.82    | 0.68  |         |
+| Question  | Chat-GPT |   RAG    | Similarity | Score | Grammar |
+| --------- | -------- | -------- | ---------- | ----- | ------- |
+|     1     |  correct | correct  |    0.80    | 0.69  |         |
+|     2     |  correct | correct  |    0.75    | 0.63  |         |
+|     3     |  correct |   error  |   -0.12    |       |         |
+|     4     |  correct |   error  |   -0.05    |       |         |
+|     5     |  correct |   error  |   -0.11    |       |         |
+|     6     |  correct |unprecise |    0.68    | 0.71  |         |
+|     7     |  differs | differs  |    0.80    | 0.73  |         |
+|     8     |  correct |incorrect |    0.68    | 0.73  |         |
+|     9     |  correct | correct  |    0.80    | 0.72  |         |
+|    10     |  correct | correct  |    0.66    | 0.69  |         |
+|    11     |  correct | correct  |    0.76    | 0.62  |         |
+|    12     |  correct | correct  |    0.67    | 0.62  |         |
+|    13     |  correct |unprecise |    0.82    | 0.74  |         |
+|    14     |  correct | correct  |    0.84    | 0.73  |         |
+|    15     |  correct | correct  |    0.85    | 0.71  |         |
+|    16     |  correct | correct  |    0.87    | 0.63  |         |
+|    17     |  correct | aborted  |    0.64    | 0.70  |         |
+|    18     |  correct | correct  |    0.85    | 0.61  |         |
+|    19     |  correct | correct  |    0.72    | 0.68  |         |
+|    20     |  correct |   error  |   -0.09    |       |         |
+|    21     |  correct |unprecise |    0.62    | 0.67  |         |
+|    22     |  correct | correct  |    0.61    | 0.68  |         |
+|    23     |  correct | correct  |    0.82    | 0.68  |         |
 
 2. Generated unrelated QA's
 
@@ -273,15 +273,29 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 
 1. Generation of PubMed related QA's
 
-       1. Question: Both answers contain the words problem-solving, resoning and ability to learn. However RAG mentioned that there is no definition of intelligence in medical context. Chat-GPT defines it in the answers.
-       2. Question: The answer of RAG referes to measure of a intelligence in a admission process of a medical school. Chat-GPT is more general and referes to measuere the intelligence with an IQ test.
+       1. Both answers contain the words "problem-solving," "reasoning," and "ability to learn." However, RAG mentioned that there is no definition of intelligence in a medical context, while Chat-GPT defines it in the answers.
+       2. The answer of RAG refers to the measure of intelligence in an admission process of a medical school, while Chat-GPT is more general and refers to measuring intelligence with an IQ test.
        3. No RAG answer
        4. No RAG answer
        5. No RAG answer
-       6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence which will be asked later. The Chat-GPT answer is short an precise. 
-       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only the maintain intelligence is possible by activation the cognitive function with games, reading etc.  
-       8. RAG does not answer the question and just print the abstract of the highest scored document. However, the abstract is the right topic. It's about research of the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
-       
+       6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence, which will be asked later. The Chat-GPT answer is short and precise.
+       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only maintaining intelligence is possible by activating cognitive function with games, reading, etc. It is noticeable that the similarity value is high, even though the answers are opposite. This is a good example of why it's hard to compare the semantics of sentences. The words are similar, but a small negation can change the whole context. 
+       8. RAG does not answer the question and just prints the abstract of the highest scored document. However, the abstract is on the right topic. It's about research on the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
+       9. Both answers are similar.
+       10. Both answers are similar but RAG gives more details. 
+       11. Both answers are similar and refer to non-pharmacological methods to improve aspects of cognition.
+       12. Both answers are similar. 
+       13. RAG gives exactly the same answer as in Question 6. But by checking the source, one can see that it is not the abstract. However, the topic is correct. Chat-GPT answers short and precise.
+       14. Both answers are similar.
+       15. The answers to these questions are quite interesting. Both state that intelligence is associated with better decisions. RAG, however, focuses more on empathy in the decision-making process, while Chat-GPT seems to refer more to an analytical decision-making process.
+       16. Both answers state that it is possible to quantify intelligence. RAG refers to the SAT, ACT, and GRE tests, while Chat-GPT refers to more well-known IQ tests.
+       17. The answer was not generated completely and seems to have been aborted in between. However, the topic of the referred document is correct. The Chat-GPT answer is similar.
+       18. Both answers are similar.
+       19. Both answers are similar. 
+       20. No RAG answer
+       21. RAG provides a long answer that is not the abstract of the source. Both answers are on the same topic, but Chat-GPT is shorter and more precise.
+       22. RAG is again more detailed in the answer. However, both answers are similar. 
+       23. Both answers state that intelligence and cognitive functions differ. 
 
 Why do we sometimes get the abstract as an answer???
 
