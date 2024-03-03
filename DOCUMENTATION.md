@@ -135,11 +135,11 @@ Here we were able to not only customize the models available to the user in a co
 ![UI with answer](evaluation/images/prompt.png)
 
 ### Deployment
-- did not containerize
-- why?
-- etc.
+We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. The Docker file can still be found `chat-ui-rag/Dockerfile`, but it didn't run as intended, because the build files weren't found. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example. 
 
 ### Development
+
+The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to expirement with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
 - Paperspace
 - Google Colab
@@ -312,16 +312,20 @@ In question 1 RAG mentioned that it is not possible to improve intelligence thro
 | ----------------- | -------------- | ------------------ | ------------ | --------- | ---------- | ------------------ | -------------- | ----------- |
 | Jonas Gann        |                |                    |              |           |            |                    |                |             |
 | Christian Teutsch |                |                    |              |           |            |                    |                |             |
-| Saif Mandour      |                |                    |              |           |            |                    |                |             |
+| Saif Mandour      |                |          x         |       x      |     x     |            |        x           |                |      x      |
 
 ### Jonas Gann
 
 ### Christian Teutsch
 
 ### Saif Mandour
+Data Proprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand. 
 
 ## Conclusion and Future Work
 
+### Opensearch
+
+### Deployment
 - recap main contributions
 - reflect on limitations
 - possible improvements / expansions
@@ -359,8 +363,9 @@ In question 1 RAG mentioned that it is not possible to improve intelligence thro
        https://arxiv.org/abs/2310.06825 
 [^21]: https://kit.svelte.dev/ 
 [^22]: https://www.docker.com/
-
-
+[^23]: https://nodejs.org/docs/latest/api/
+[^24]: https://pm2.keymetrics.io/
+[^25]: https://httpd.apache.org/docs/2.4/de/
 
 
 
