@@ -155,28 +155,57 @@ Here we were able to not only customize the models available to the user in a co
 
 ### Data
 
+The data was retrieved as described in the Data Retrieval section. Each entry contains 20 different meta-information fields. We decided to use the unique PubMed identification PMID to identify our documents in the vector database. The abstract (AB) is used to generate the word embedding to calculate similarity between documents and the question query. We also provide the source (SO) by concatenating it with the first author's (FAU) name. Additionally, we save the title (TI) and the date of publication (DP).
+
+We used t
 - what data used for project (medline data format)
 - when, how, where (already mentioned in Approach?)
 - metrics of data
 
 ### Evaluation Method
 
+We used three different evaluation settings. 
+
+1. Generation of PubMed related questions and answers (QA's) 
+The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score and the grammar of the generated question of the RAG system.
+
+2. Generated unrelated QA's 
+We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table ???.
+
+3. Sentiment analysis 
+We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table ???.
+
+
 - explain how performance is evaluated
 - quantitative or qualitative
 
 ### Experimental Details
+We used the follwing prompts to generate the QA's in Chat-GPT.  
+
+1. Generation of PubMed related QA's
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
+User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
+
+2. Generation of PubMed related QA's
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
+User: "Can you answer the 5 questions?"
+
+3. Generation of PubMed related QA's
+User: "Are you familiar with PubMed dataset?"
+User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
+User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
+User: "Can you proviide 10 questions and answers which have a positive or negative answer? It must be possible to answer with yes or no."
+
 
 - used some configurable evaluation?
 
+
 ### Results
 
-- baseline comparison?
-- tables, plots?
-- expectations vs. reality?
-
-### Analysis
-
-The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json. 
+1. Generation of PubMed related QA's
+We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
 
 | Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
 | --------- | -------- | ------- | ---------- | ----- | ------- |
@@ -203,6 +232,18 @@ The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json.
 |    21     | correct? | correct?|    0.62    | 0.67  |         |
 |    22     | correct? | correct?|    0.61    | 0.68  |         |
 |    23     | correct? | correct?|    0.82    | 0.68  |         |
+
+2. Generation of PubMed related QA's
+
+3. Generation of PubMed related QA's
+
+- baseline comparison?
+- tables, plots?
+- expectations vs. reality?
+
+### Analysis
+
+The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json. 
 
 
 - qualitative analysis
