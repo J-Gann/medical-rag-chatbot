@@ -217,7 +217,7 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 | Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
 | --------- | -------- | ------- | ---------- | ----- | ------- |
 |     1     |  correct | correct |    0.80    | 0.69  |         |
-|     2     |  correct | correct?|    0.75    | 0.63  |         |
+|     2     |  correct | correct |    0.75    | 0.63  |         |
 |     3     |  correct |   error |   -0.12    |       |         |
 |     4     |  correct |   error |   -0.05    |       |         |
 |     5     |  correct |   error |   -0.11    |       |         |
@@ -274,7 +274,14 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 1. Generation of PubMed related QA's
 
        1. Question: Both answers contain the words problem-solving, resoning and ability to learn. However RAG mentioned that there is no definition of intelligence in medical context. Chat-GPT defines it in the answers.
-       2. Question:    
+       2. Question: The answer of RAG referes to measure of a intelligence in a admission process of a medical school. Chat-GPT is more general and referes to measuere the intelligence with an IQ test.
+       3. No RAG answer
+       4. No RAG answer
+       5. No RAG answer
+       6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence which will be asked later. The Chat-GPT answer is short an precise. 
+       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only the maintain intelligence is possible by activation the cognitive function with games, reading etc.  
+       8. RAG does not answer the question and just print the abstract of the highest scored document. However, the abstract is the right topic. It's about research of the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
+       
 
 Why do we sometimes get the abstract as an answer???
 
