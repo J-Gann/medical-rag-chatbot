@@ -167,12 +167,15 @@ We used t
 We used three different evaluation settings. 
 
 1. Generation of PubMed related questions and answers (QA's) 
+
 The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score and the grammar of the generated question of the RAG system.
 
 2. Generated unrelated QA's 
+
 We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table ???.
 
 3. Sentiment analysis 
+
 We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table ???.
 
 
@@ -183,16 +186,19 @@ We compared the sentiment analysis of questions that should be answered with eit
 We used the follwing prompts to generate the QA's in Chat-GPT.  
 
 1. Generation of PubMed related QA's
+
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
 
 2. Generated unrelated QA's
+
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
 User: "Can you answer the 5 questions?"
 
 3. Sentiment analysis
+
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
@@ -205,33 +211,34 @@ User: "Can you proviide 10 questions and answers which have a positive or negati
 ### Results
 
 1. Generation of PubMed related QA's
+
 We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
 
 | Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar |
 | --------- | -------- | ------- | ---------- | ----- | ------- |
-|     1     | correct? | correct?|    0.80    | 0.69  |         |
-|     2     | correct? | correct?|    0.75    | 0.63  |         |
-|     3     | correct? | correct?|   -0.12    |       |         |
-|     4     | correct? | correct?|   -0.05    |       |         |
-|     5     | correct? | correct?|   -0.11    |       |         |
-|     6     | correct? | correct?|    0.68    | 0.71  |         |
-|     7     | correct? | correct?|    0.80    | 0.73  |         |
-|     8     | correct? | correct?|    0.68    | 0.73  |         |
-|     9     | correct? | correct?|    0.80    | 0.72  |         |
-|    10     | correct? | correct?|    0.66    | 0.69  |         |
-|    11     | correct? | correct?|    0.76    | 0.62  |         |
-|    12     | correct? | correct?|    0.67    | 0.62  |         |
-|    13     | correct? | correct?|    0.82    | 0.74  |         |
-|    14     | correct? | correct?|    0.84    | 0.73  |         |
-|    15     | correct? | correct?|    0.85    | 0.71  |         |
-|    16     | correct? | correct?|    0.87    | 0.63  |         |
-|    17     | correct? | correct?|    0.64    | 0.70  |         |
-|    18     | correct? | correct?|    0.85    | 0.61  |         |
-|    19     | correct? | correct?|    0.72    | 0.68  |         |
-|    20     | correct? | correct?|   -0.09    |       |         |
-|    21     | correct? | correct?|    0.62    | 0.67  |         |
-|    22     | correct? | correct?|    0.61    | 0.68  |         |
-|    23     | correct? | correct?|    0.82    | 0.68  |         |
+|     1     |  correct | correct |    0.80    | 0.69  |         |
+|     2     |  correct | correct?|    0.75    | 0.63  |         |
+|     3     |  correct |   error |   -0.12    |       |         |
+|     4     |  correct |   error |   -0.05    |       |         |
+|     5     |  correct |   error |   -0.11    |       |         |
+|     6     |  correct | correct?|    0.68    | 0.71  |         |
+|     7     |  correct | correct?|    0.80    | 0.73  |         |
+|     8     |  correct | correct?|    0.68    | 0.73  |         |
+|     9     |  correct | correct?|    0.80    | 0.72  |         |
+|    10     |  correct | correct?|    0.66    | 0.69  |         |
+|    11     |  correct | correct?|    0.76    | 0.62  |         |
+|    12     |  correct | correct?|    0.67    | 0.62  |         |
+|    13     |  correct | correct?|    0.82    | 0.74  |         |
+|    14     |  correct | correct?|    0.84    | 0.73  |         |
+|    15     |  correct | correct?|    0.85    | 0.71  |         |
+|    16     |  correct | correct?|    0.87    | 0.63  |         |
+|    17     |  correct | correct?|    0.64    | 0.70  |         |
+|    18     |  correct | correct?|    0.85    | 0.61  |         |
+|    19     |  correct | correct?|    0.72    | 0.68  |         |
+|    20     |  correct |   error |   -0.09    |       |         |
+|    21     |  correct | correct?|    0.62    | 0.67  |         |
+|    22     |  correct | correct?|    0.61    | 0.68  |         |
+|    23     |  correct | correct?|    0.82    | 0.68  |         |
 
 2. Generated unrelated QA's
 
@@ -264,9 +271,16 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 
 ### Analysis
 
+1. Generation of PubMed related QA's
+
+       1. Question: Both answers contain the words problem-solving, resoning and ability to learn. However RAG mentioned that there is no definition of intelligence in medical context. Chat-GPT defines it in the answers.
+       2. Question:    
+
 Why do we sometimes get the abstract as an answer???
 
 Unrelated questions -> Lower retrieval score, higher similiarity.
+
+How to handle documents which are published after February 2022 (Chat-GPT knowledge state)?
 
 - qualitative analysis
 - consistency?
