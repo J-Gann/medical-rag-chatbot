@@ -15,7 +15,12 @@ def mean_pooling(last_hidden_state, attention_mask):
     return torch.sum(last_hidden_state * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
 
 # Load the JSON data
-with open('QAs.json', 'r') as file:
+# QAs.json
+#with open('QAs.json', 'r') as file:
+#    data = json.load(file)
+    
+# unrelatedQAs.json
+with open('unrelatedQAs.json', 'r') as file:
     data = json.load(file)
 
 
@@ -37,5 +42,10 @@ with torch.no_grad():
        
 
 # Save the updated JSON data
-with open('QAs.json', 'w') as file:
+# QA's
+#with open('QAs.json', 'w') as file:
+#    json.dump(data, file, indent=4)
+
+# Unrelated QA's
+with open('unrelatedQAs.json', 'w') as file:
     json.dump(data, file, indent=4)

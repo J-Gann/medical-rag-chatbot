@@ -9,7 +9,12 @@ else:
   device = "cpu"
 
 # Load the JSON data
-with open('QAs.json', 'r') as file:
+# QAs.json
+#with open('QAs.json', 'r') as file:
+#    data = json.load(file)
+    
+# unrelatedQAs.json
+with open('unrelatedQAs.json', 'r') as file:
     data = json.load(file)
 
 for i in range(len(data)):
@@ -23,5 +28,10 @@ for i in range(len(data)):
     data[str(i+1)]['similarity'] = cosine_similarity(embedding1, embedding2)[0][0]
         
 # Save the updated JSON data
-with open('QAs.json', 'w') as file:
+# QA's
+#with open('QAs.json', 'w') as file:
+#    json.dump(data, file, indent=4)
+
+# Unrelated QA's
+with open('unrelatedQAs.json', 'w') as file:
     json.dump(data, file, indent=4)

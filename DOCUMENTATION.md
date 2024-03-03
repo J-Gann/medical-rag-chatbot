@@ -187,12 +187,12 @@ User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
 
-2. Generation of PubMed related QA's
+2. Generated unrelated QA's
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
 User: "Can you answer the 5 questions?"
 
-3. Generation of PubMed related QA's
+3. Sentiment analysis
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
@@ -233,9 +233,30 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 |    22     | correct? | correct?|    0.61    | 0.68  |         |
 |    23     | correct? | correct?|    0.82    | 0.68  |         |
 
-2. Generation of PubMed related QA's
+2. Generated unrelated QA's
 
-3. Generation of PubMed related QA's
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
+| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
+|     1     | correct? | correct?|    0.94    | 0.48  |         |   Yes  |
+|     2     | correct? | correct?|    0.79    | 0.43  |         |   Yes  |
+|     3     | correct? | correct?|    0.86    | 0.36  |         |    No  |
+|     4     | correct? | correct?|    0.83    | 0.26  |         |    No  |
+|     5     | correct? | correct?|    0.95    | 0.53  |         |   Yes  |
+
+3. Sentiment analysis
+
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Grammar | Source |
+| --------- | -------- | ------- | ---------- | ----- | ------- |--------|
+|     1     |    Yes   |    No   |    0.0     | 0.63  |         |   Yes  |
+|     2     |    Yes   |   Yes   |    1.0     | 0.70  |         |   Yes  |
+|     3     |    Yes   |   Yes   |    1.0     | 0.71  |         |   Yes  |
+|     4     |    Yes   |    No   |    0.0     | 0.67  |         |   Yes  |
+|     5     |    Yes   |  Unsure |    0.5     | 0.79  |         |   Yes  |
+|     6     |     No   |    No   |    1.0     | 0.76  |         |   Yes  |
+|     7     |    Yes   |   Yes   |    1.0     | 0.72  |         |   Yes  |
+|     8     |     No   |  Unsure |    0.5     | 0.66  |         |   Yes  |
+|     9     |     No   |    No   |    1.0     | 0.63  |         |   Yes  |
+|    10     |     No   |    No   |    1.0     | 0.77  |         |   Yes  |
 
 - baseline comparison?
 - tables, plots?
@@ -243,8 +264,9 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 
 ### Analysis
 
-The table data can be found in /QA-INLPT/WS2023/evaluation/QAs.json. 
+Why do we sometimes get the abstract as an answer???
 
+Unrelated questions -> Lower retrieval score, higher similiarity.
 
 - qualitative analysis
 - consistency?
