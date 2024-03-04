@@ -156,16 +156,16 @@ We used three different evaluation settings.
 
 1. Generation of PubMed related questions and answers (QA's)
 
-The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table ??. We also check the retrieval score the generated question of the RAG system.
-Note, we use a retrieval score threshold to filter sources with a lower retrieval score.
+The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table 1. We also check the retrieval score the generated question of the RAG system.
+Note, we use a retrieval score threshold to filter sources with a lower retrieval score. 
 
 2. Generated unrelated QA's
 
-We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table ???.
+We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table 2.
 
 3. Sentiment analysis
 
-We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table ???.
+We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table 3.
 
 ### Experimental Details
 
@@ -202,86 +202,103 @@ User: "Can you provide 10 questions and answers which have a positive or negativ
 
 We calculated the similarity of the answers for all questions. The retrieval score was logged together with the answers. Note that the unanswered questions are due to a key error. We updated the source information later, and it was not filtered when we created the database. So, it could be that a document from the vector database has the highest score but no source. If this is the case, we get an error in the pinceoneEndpoint.py function where we filter documents without a source. However, we decided to leave the results in the test data to do a countercheck. We plan to update the vector database before the submission deadline.
 
-| Question | Chat-GPT | RAG       | Similarity | Score |
-| -------- | -------- | --------- | ---------- | ----- |
-| 1        | correct  | correct   | 0.80       | 0.69  |
-| 2        | correct  | correct   | 0.75       | 0.63  |
-| 3        | correct  | error     | -0.12      |       |
-| 4        | correct  | error     | -0.05      |       |
-| 5        | correct  | error     | -0.11      |       |
-| 6        | correct  | unprecise | 0.68       | 0.71  |
-| 7        | differs  | differs   | 0.80       | 0.73  |
-| 8        | correct  | incorrect | 0.68       | 0.73  |
-| 9        | correct  | correct   | 0.80       | 0.72  |
-| 10       | correct  | correct   | 0.66       | 0.69  |
-| 11       | correct  | correct   | 0.76       | 0.62  |
-| 12       | correct  | correct   | 0.67       | 0.62  |
-| 13       | correct  | unprecise | 0.82       | 0.74  |
-| 14       | correct  | correct   | 0.84       | 0.73  |
-| 15       | correct  | correct   | 0.85       | 0.71  |
-| 16       | correct  | correct   | 0.87       | 0.63  |
-| 17       | correct  | aborted   | 0.64       | 0.70  |
-| 18       | correct  | correct   | 0.85       | 0.61  |
-| 19       | correct  | correct   | 0.72       | 0.68  |
-| 20       | correct  | error     | -0.09      |       |
-| 21       | correct  | unprecise | 0.62       | 0.67  |
-| 22       | correct  | correct   | 0.61       | 0.68  |
-| 23       | correct  | correct   | 0.82       | 0.68  |
+In the next section, we compare the answers of RAG and Chat-GPT. The results are stated in the table. We classify the answers as follows:
+
+- Correct: The answer makes sense.
+- Unprecise: The answer refers to the right topic but is not precise.
+- Incorrect: The answer is the abstract or is related to the wrong topic.
+- Differs: Both answers are stating the opposite.
+- Aborted: The answer generation was apported.
+
+Table 1: Results of PubMed related QA's
+| Question  | Chat-GPT |   RAG    | Similarity | Score | 
+| --------- | -------- | -------- | ---------- | ----- |  
+|     1     |  correct | correct  |    0.80    | 0.69  |    
+|     2     |  correct |unprecise |    0.75    | 0.63  |     
+|     3     |  correct |   error  |   -0.12    |       |  
+|     4     |  correct |   error  |   -0.05    |       |   
+|     5     |  correct |   error  |   -0.11    |       |     
+|     6     |  correct |incorrect |    0.68    | 0.71  |         
+|     7     |  differs | differs  |    0.80    | 0.73  |         
+|     8     |  correct |incorrect |    0.68    | 0.73  |         
+|     9     |  correct | correct  |    0.80    | 0.72  |         
+|    10     |  correct | correct  |    0.66    | 0.69  |         
+|    11     |  correct | correct  |    0.76    | 0.62  |         
+|    12     |  correct | correct  |    0.67    | 0.62  |         
+|    13     |  correct |unprecise |    0.82    | 0.74  |         
+|    14     |  correct | correct  |    0.84    | 0.73  |         
+|    15     |  correct | correct  |    0.85    | 0.71  |         
+|    16     |  correct | correct  |    0.87    | 0.63  |         
+|    17     |  correct | aborted  |    0.64    | 0.70  |         
+|    18     |  correct | correct  |    0.85    | 0.61  |         
+|    19     |  correct | correct  |    0.72    | 0.68  |         
+|    20     |  correct |   error  |   -0.09    |       |         
+|    21     |  correct |unprecise |    0.62    | 0.67  |         
+|    22     |  correct | correct  |    0.61    | 0.68  |         
+|    23     |  correct | correct  |    0.82    | 0.68  |      
 
 2. Generated unrelated QA's
 
-| Question | Chat-GPT | RAG     | Similarity | Score | Source |
-| -------- | -------- | ------- | ---------- | ----- | ------ |
-| 1        | correct  | correct | 0.94       | 0.48  | Yes    |
-| 2        | correct  | correct | 0.79       | 0.43  | Yes    |
-| 3        | correct  | correct | 0.86       | 0.36  | No     |
-| 4        | correct  | correct | 0.83       | 0.26  | No     |
-| 5        | correct  | correct | 0.95       | 0.53  | Yes    |
+We present the Similarty of the RAG answers, the Retrieval Score and if the Source are over the threshold. We also check by human eye if the answers make sense. 
+
+Table 2: Results of PubMed unrelated QA's
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| --------- | -------- | ------- | ---------- | ----- | -------|
+|     1     | correct  | correct |    0.94    | 0.48  |   Yes  |
+|     2     | correct  | correct |    0.79    | 0.43  |   Yes  |
+|     3     | correct  | correct |    0.86    | 0.36  |    No  |
+|     4     | correct  | correct |    0.83    | 0.26  |    No  |
+|     5     | correct  | correct |    0.95    | 0.53  |   Yes  |
 
 3. Sentiment analysis
 
-We assume that the same answer results in a Similarity of 1, the opposite 0 and a undefined answer of the RAG as Unsure.
+We assume that the same answer results in a Similarity of 1, the opposite 0 and a unsure answer of the RAG with 0.5. 
 
-| Question | Chat-GPT | RAG    | Similarity | Score | Source |
-| -------- | -------- | ------ | ---------- | ----- | ------ |
-| 1        | Yes      | No     | 0.0        | 0.63  | Yes    |
-| 2        | Yes      | Yes    | 1.0        | 0.70  | Yes    |
-| 3        | Yes      | Yes    | 1.0        | 0.71  | Yes    |
-| 4        | Yes      | No     | 0.0        | 0.67  | Yes    |
-| 5        | Yes      | Unsure | 0.5        | 0.79  | Yes    |
-| 6        | No       | No     | 1.0        | 0.76  | Yes    |
-| 7        | Yes      | Yes    | 1.0        | 0.72  | Yes    |
-| 8        | No       | Unsure | 0.5        | 0.66  | Yes    |
-| 9        | No       | No     | 1.0        | 0.63  | Yes    |
-| 10       | No       | No     | 1.0        | 0.77  | Yes    |
+Table 3: Results of sentiment analysis
+| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| --------- | -------- | ------- | ---------- | ----- | -------|
+|     1     |    Yes   |    No   |    0.0     | 0.63  |   Yes  |
+|     2     |    Yes   |   Yes   |    1.0     | 0.70  |   Yes  |
+|     3     |    Yes   |   Yes   |    1.0     | 0.71  |   Yes  |
+|     4     |    Yes   |    No   |    0.0     | 0.67  |   Yes  |
+|     5     |    Yes   |  Unsure |    0.5     | 0.79  |   Yes  |
+|     6     |     No   |    No   |    1.0     | 0.76  |   Yes  |
+|     7     |    Yes   |   Yes   |    1.0     | 0.72  |   Yes  |
+|     8     |     No   |  Unsure |    0.5     | 0.66  |   Yes  |
+|     9     |     No   |    No   |    1.0     | 0.63  |   Yes  |
+|    10     |     No   |    No   |    1.0     | 0.77  |   Yes  |
 
 ### Analysis
 
 1. Generation of PubMed related QA's
 
-   1. Both answers contain the words "problem-solving," "reasoning," and "ability to learn." However, RAG mentioned that there is no definition of intelligence in a medical context, while Chat-GPT defines it in the answers.
-   2. The answer of RAG refers to the measure of intelligence in an admission process of a medical school, while Chat-GPT is more general and refers to measuring intelligence with an IQ test.
-   3. No RAG answer
-   4. No RAG answer
-   5. No RAG answer
-   6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence, which will be asked later. The Chat-GPT answer is short and precise.
-   7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only maintaining intelligence is possible by activating cognitive function with games, reading, etc. It is noticeable that the similarity value is high, even though the answers are opposite. This is a good example of why it's hard to compare the semantics of sentences. The words are similar, but a small negation can change the whole context.
-   8. RAG does not answer the question and just prints the abstract of the highest scored document. However, the abstract is on the right topic. It's about research on the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
-   9. Both answers are similar.
-   10. Both answers are similar but RAG gives more details.
-   11. Both answers are similar and refer to non-pharmacological methods to improve aspects of cognition.
-   12. Both answers are similar.
-   13. RAG gives exactly the same answer as in Question 6. But by checking the source, one can see that it is not the abstract. However, the topic is correct. Chat-GPT answers short and precise.
-   14. Both answers are similar.
-   15. The answers to these questions are quite interesting. Both state that intelligence is associated with better decisions. RAG, however, focuses more on empathy in the decision-making process, while Chat-GPT seems to refer more to an analytical decision-making process.
-   16. Both answers state that it is possible to quantify intelligence. RAG refers to the SAT, ACT, and GRE tests, while Chat-GPT refers to more well-known IQ tests.
-   17. The answer was not generated completely and seems to have been aborted in between. However, the topic of the referred document is correct. The Chat-GPT answer is similar.
-   18. Both answers are similar.
-   19. Both answers are similar.
-   20. No RAG answer
-   21. RAG provides a long answer that is not the abstract of the source. Both answers are on the same topic, but Chat-GPT is shorter and more precise.
-   22. RAG is again more detailed in the answer. However, both answers are similar.
-   23. Both answers state that intelligence and cognitive functions differ.
+We compare the answers of the RAG and Chat-GPT in the QAs.json file. 
+
+       1. Both answers contain the words "problem-solving," "reasoning," and "ability to learn." However, RAG mentioned that there is no single agreed-upon definition of intelligence in a medical context, while Chat-GPT defines it in the answers.
+       2. The answer of RAG refers to the measure of intelligence in an admission process of a medical school, while Chat-GPT is more general and refers to measuring intelligence with an IQ test.
+       3. No RAG answer
+       4. No RAG answer
+       5. No RAG answer
+       6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence, which will be asked later. The Chat-GPT answer is short and precise.
+       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only maintaining intelligence is possible by activating cognitive function with games, reading, etc. It is noticeable that the similarity value is high, even though the answers are opposite. This is a good example of why it's hard to compare the semantics of sentences. The words are similar, but a small negation can change the whole context. 
+       8. RAG does not answer the question and just prints the abstract of the highest scored document. However, the abstract is on the right topic. It's about research on the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
+       9. Both answers are similar.
+       10. Both answers are similar but RAG gives more details. 
+       11. Both answers are similar and refer to non-pharmacological methods to improve aspects of cognition.
+       12. Both answers are similar. 
+       13. RAG gives exactly the same answer as in Question 6. But by checking the source, one can see that it is not the abstract. Here we have to double check why the same answer is generated and why it does not look like a summary. However, the topic is correct. Chat-GPT answers short and precise.
+       14. Both answers are similar.
+       15. Both state that intelligence is associated with better decisions. RAG, however, focuses more on empathy in the decision-making process, while Chat-GPT seems to refer more to an analytical decision-making process.
+       16. Both answers state that it is possible to quantify intelligence. RAG refers to the SAT, ACT, and GRE tests, while Chat-GPT refers to more well-known IQ tests.
+       17. The answer was not generated completely and seems to have been aborted in between. However, the topic of the referred document is correct. The Chat-GPT answer is similar.
+       18. Both answers are similar.
+       19. Both answers are similar. 
+       20. No RAG answer
+       21. RAG provides a long answer that is not the abstract of the source. The RAG answer is indecisive and refers to studies with opposite results. It also refers to BMI and not the example disease cardiovascular disease or metabolic disorders from the questions. Chat-GPT answers confidently why these diseases can affect intelligence.
+       22. RAG is again more detailed in the answer. However, both answers are similar. 
+       23. Both answers state that intelligence and cognitive functions differ. 
+
+Upon visual inspection, it became evident that the similarity measure is not a reliable indicator for analyzing the semantic content of the QA system. A notable instance is question 7, where despite a high similarity value of 0.8, the answers contain opposing statements. However, the similarity measure can still be used as an initial filter to determine if the answers share common words, which may suggest a shared topic.
 
 2. Generated unrelated QA's
 
@@ -291,26 +308,29 @@ We assume that the same answer results in a Similarity of 1, the opposite 0 and 
    4. Both answers refer to the Roman Empire. We checked the recommended authors and book titles. The author Susan Wise Bauer and the book title recommended from Chat-GPT exist. The author Paul Erdkamp recommended from RAG exists, but we didn't find the book. Only books which are related to the Roman Empire but with other titles. Again RAG is more detailed and recommend other authors as well. Were some exist and some not.
    5. Both answers are similar with a similarity score of 0.95. Also the retrieval score higher than the other unrelated questions.
 
-We assume that BioMistral is able to generate good answers to non-PubMed-related data because it's based on the underlying Mistral model. It's interesting to see that the similarity seems to be higher with smaller retrieval scores. We think that the model adds more information from the Mistral model if the retrieved document does not provide good information for the given questions. It's also good to see that the generated unrelated Q&A's retrieval scores are all smaller than the generated questions for the related. This shows that we generated the Q&A's correctly, even if they are sometimes a bit related to medical issues.
+We presume that BioMistral can produce accurate answers to non-PubMed-related data due to its foundation in the underlying Mistral model. It's intriguing to note that the similarity tends to increase with lower retrieval scores. We believe this is because the model incorporates more information from the Mistral model when the retrieved document doesn't supply sufficient information for the given question. It's also noteworthy that the retrieval scores for the generated unrelated QA's are consistently lower than those for the related ones. This indicates that we have correctly generated the QA's, even if they are occasionally tangentially related to medical topics.
 
 3. Sentiment analysis
 
-We see that 4 of ten questions are answered differently.
-In question 1 RAG mentioned that it is not possible to improve intelligence through education and cognitive training. This is interesting because the RAG answered the question 7 from related QA's in the opposite way. In question 4, it's asked if it possible to accurately measure intelligence by using standardized tests. We think that in this case RAG is correct with answering the question with no. Which means that Chat-GPT is wrong. In question 5, RAG is unsure to give a true or false answer. The question is if socioeconomic factors influence intelligence. We think RAG is correct because it's not really easy to state a yes or no answer to this question. The question 8 asked if intelligence is a fixed trait that remains constant throughout. We go again with RAG and think that the answer is too complex to answer it with yes or no.
+We observe that 4 out of 10 questions are answered differently.
+In question 1, RAG mentioned that it is not possible to improve intelligence through education and cognitive training. This is interesting because RAG answered question 7 from related QA's in the opposite way. In question 4, it's asked if it is possible to accurately measure intelligence using standardized tests. We think that in this case, RAG is correct in answering the question with no, which means that Chat-GPT is wrong. In question 5, RAG is unsure whether to give a true or false answer. The question is whether socioeconomic factors influence intelligence. We think RAG is correct because it's not really easy to state a yes or no answer to this question. Question 8 asked if intelligence is a fixed trait that remains constant throughout. We again side with RAG and think that the answer is too complex to answer with a simple yes or no.
+
 
 ## Contributions
 
 |                   | Data Retrieval | Data Preprocessing | Data Storage | LLM Model | RAG System | Document Reference | User Interface | Experiments |
 | ----------------- | -------------- | ------------------ | ------------ | --------- | ---------- | ------------------ | -------------- | ----------- |
-| Jonas Gann        | x              | x                  | x            | x         | x          | x                  | x              |             |
-| Christian Teutsch |                |                    |              |           |            |                    |                |             |
-| Saif Mandour      |                | x                  | x            | x         |            | x                  |                | x           |
+| Jonas Gann        |                |                    |              |           |            |                    |                |             |
+| Christian Teutsch |                |          x         |       x      |           |     x      |                    |                |      x      |
+| Saif Mandour      |                |          x         |       x      |     x     |            |        x           |                |      x      |
 
 ### Jonas Gann
 
 At the beginning of the project I retrieved the data from PubMed and did some experiments how to use embeddings to calculate the similar papers for a given question. I eventually found a working method but still decided to use Pinecone as a vector store and implemented the required API calls. I then started looking into the answer generation using various kinds of methods and LLMs and eventually decided one of the more powerful instruct-models to be the best fit for our use case. During this time I also had to find a way to run the LLMs which led me to test Ollama for my local machine and Google Colab as well as Paperspace for remote GPU computing. Ollama turned out contain very performant models generating good quality answers. So I moved on using Ollama. The next step was to integrate relevant papers into the user prompt. I tried different approaches and prompts which lead to suboptimal behavior but were satisfactory enough to move to the next important feature: the UI. I looked around a bit and found out there were many open-source UIs available for the use case at hand. I decided to use Chat-UI and started to customize it to our needs by integrating the features I previously developed in python notebooks. As the UI is written in TypeScript and I wanted to reuse the python code I settled for the solution of hosting essential features in a REST server. Now that all essential systems were in place I started to iteratively improve each of the system components. This included selection of the superior BioMistral model as well as adjusting the system prompt of the model and the insertion of abstracts into the user prompt. One main challenge was to enable the model to generate references to the papers used in the context. As I found no reliable solution, I manually inserted the references to the papers in the generated answer.
 
 ### Christian Teutsch
+At the beginning of the project I did some investigations how to parse the PubMed data and found the biopython package as a suitable tool. 
+We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. Additionally, I implemented pre-processing in the Opensearch folder. I also made some modifications to the RAG, such as pre-prompting and including metadata like the retrieval score. Saif and I conducted the experiments together, and I analyzed the results. 
 
 ### Saif Mandour
 

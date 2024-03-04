@@ -3,7 +3,7 @@
 |                   | GitHub Handle | E-Mail                       | Course of Study           | Matriculation Number |
 | ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
 | Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
-| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           | 3729420              |
+| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de | Data and Computer Science | 3729420              |
 | Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
 Advisor: Robin Khanna
@@ -79,6 +79,6 @@ This folder contains the notes we took during the project.
 
 ### Opensearch: [Opensearch](./opensearch)
 
-<!-- DESCRIBE -->
+The OpenSearch Vectorbase runs on a localhost. The pubmed_preprocessing.ipynb notebook can be used to preprocess the PubMed data, creating an index and bulk loading the data into the Vectorbase. It also provides an index mapping to create a k-NN search. The k-NN can be tested in the last code section. This code is also used in the opensearchEndpoint.py. To use OpenSearch instead of Pinceone Vector Database, the .env file must be modified. The Rag attribute in the MODELS variable must be changed to "vectorStoreType": "opensearch" and "url": "http://127.0.0.1:9300".
 
 [^1]: https://github.com/huggingface/chat-ui
