@@ -232,9 +232,11 @@ We calculated the similarity of the answers for all questions. The retrieval sco
 |    20     |  correct |   error  |   -0.09    |       |         
 |    21     |  correct |unprecise |    0.62    | 0.67  |         
 |    22     |  correct | correct  |    0.61    | 0.68  |         
-|    23     |  correct | correct  |    0.82    | 0.68  |         
+|    23     |  correct | correct  |    0.82    | 0.68  |      
 
 2. Generated unrelated QA's
+
+We present the Similarty of the RAG answers, the Retrieval Score and if the Source are over the threshold. We also check by human eye if the answers make sense. 
 
 | Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
 | --------- | -------- | ------- | ---------- | ----- | -------|
@@ -289,6 +291,8 @@ We assume that the same answer results in a Similarity of 1, the opposite 0 and 
        21. RAG provides a long answer that is not the abstract of the source. Both answers are on the same topic, but Chat-GPT is shorter and more precise.
        22. RAG is again more detailed in the answer. However, both answers are similar. 
        23. Both answers state that intelligence and cognitive functions differ. 
+
+       WHY DO WE PRINT ABSTRACTS???
 
 2. Generated unrelated QA's
 
