@@ -319,12 +319,18 @@ Data Proprocessing and Data Storage went hand in hand when implementing a vector
 
 For the final project we decided to mainly use pinecone as the main vector space. I decided to help looking for the LLM that suits our problem the best. As specified in the `.env.template` file, I tried out different models like Mistral, Llama2 and openchat, which is an LLM based on Llama[^26]. At  the end we opted for Biomistral, which is an open source LLM pretrained using Pubmed data. Perfect for our needs. However, we noticed when evaluating the model, that the knowledge cutoff was mitigated by our RAG system.
 
+When working on document referencing in generated answers, I noticed that our model just outputs on the title of the most relevant document and not the source. I looked into the data to find a pattern in the source "SO" of the retrieved documents and decided to create a website link out of it. Each document had a "[doi]" tag in the sources, so replacing it with an http request created a reliable and clean document reference with a website link to read more about the paper. For document reference I mainly worked with `pineconeEndpoint.py`.
+
+To evaluate the chatbot Christian and I generated a list of questions and answers with ChatGPT-3.5 and compared the answers with the answers of our chatbot as specified in the Evaluation section. The evaluation showed us mistakes and improvement potential which will be adressed in the future work section. An obvious problem, was that in the preprocessing phase some document sources weren't collected, which led to an error when trying to reference those document without a source at hand.
+
+Finally I looked into preparing the chatbot for production and setting up the tools needed for that. As specified in the deployment section, I ran into problems with containerizing the whole chatbot into one image, but we managed to let mongodb run in a docker image reliably. 
+
 
 ## Conclusion and Future Work
 
 ### Opensearch
 
-### Deployment
+
 - recap main contributions
 - reflect on limitations
 - possible improvements / expansions
