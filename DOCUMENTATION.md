@@ -134,13 +134,11 @@ Here we were able to not only customize the models available to the user in a co
 
 ![UI with answer](evaluation/images/prompt.png)
 
-
 ## Collaboration
 
 We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. The Docker file can still be found `chat-ui-rag/Dockerfile`, but it didn't run as intended, because the build files weren't found. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example.
 
 ### Development
-
 
 The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^26]. This step allowed us to experiment with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
@@ -157,7 +155,7 @@ We used three different evaluation settings.
 1. Generation of PubMed related questions and answers (QA's)
 
 The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table 1. We also check the retrieval score the generated question of the RAG system.
-Note, we use a retrieval score threshold to filter sources with a lower retrieval score. 
+Note, we use a retrieval score threshold to filter sources with a lower retrieval score.
 
 2. Generated unrelated QA's
 
@@ -211,68 +209,68 @@ In the next section, we compare the answers of RAG and Chat-GPT. The results are
 - Aborted: The answer generation was apported.
 
 Table 1: Results of PubMed related QA's
-| Question  | Chat-GPT |   RAG    | Similarity | Score | 
+| Question | Chat-GPT | RAG | Similarity | Score |
 | --------- | -------- | -------- | ---------- | ----- |  
-|     1     |  correct | correct  |    0.80    | 0.69  |    
-|     2     |  correct |unprecise |    0.75    | 0.63  |     
-|     3     |  correct |   error  |   -0.12    |       |  
-|     4     |  correct |   error  |   -0.05    |       |   
-|     5     |  correct |   error  |   -0.11    |       |     
-|     6     |  correct |incorrect |    0.68    | 0.71  |         
-|     7     |  differs | differs  |    0.80    | 0.73  |         
-|     8     |  correct |incorrect |    0.68    | 0.73  |         
-|     9     |  correct | correct  |    0.80    | 0.72  |         
-|    10     |  correct | correct  |    0.66    | 0.69  |         
-|    11     |  correct | correct  |    0.76    | 0.62  |         
-|    12     |  correct | correct  |    0.67    | 0.62  |         
-|    13     |  correct |unprecise |    0.82    | 0.74  |         
-|    14     |  correct | correct  |    0.84    | 0.73  |         
-|    15     |  correct | correct  |    0.85    | 0.71  |         
-|    16     |  correct | correct  |    0.87    | 0.63  |         
-|    17     |  correct | aborted  |    0.64    | 0.70  |         
-|    18     |  correct | correct  |    0.85    | 0.61  |         
-|    19     |  correct | correct  |    0.72    | 0.68  |         
-|    20     |  correct |   error  |   -0.09    |       |         
-|    21     |  correct |unprecise |    0.62    | 0.67  |         
-|    22     |  correct | correct  |    0.61    | 0.68  |         
-|    23     |  correct | correct  |    0.82    | 0.68  |      
+| 1 | correct | correct | 0.80 | 0.69 |  
+| 2 | correct |unprecise | 0.75 | 0.63 |  
+| 3 | correct | error | -0.12 | |  
+| 4 | correct | error | -0.05 | |  
+| 5 | correct | error | -0.11 | |  
+| 6 | correct |incorrect | 0.68 | 0.71 |  
+| 7 | differs | differs | 0.80 | 0.73 |  
+| 8 | correct |incorrect | 0.68 | 0.73 |  
+| 9 | correct | correct | 0.80 | 0.72 |  
+| 10 | correct | correct | 0.66 | 0.69 |  
+| 11 | correct | correct | 0.76 | 0.62 |  
+| 12 | correct | correct | 0.67 | 0.62 |  
+| 13 | correct |unprecise | 0.82 | 0.74 |  
+| 14 | correct | correct | 0.84 | 0.73 |  
+| 15 | correct | correct | 0.85 | 0.71 |  
+| 16 | correct | correct | 0.87 | 0.63 |  
+| 17 | correct | aborted | 0.64 | 0.70 |  
+| 18 | correct | correct | 0.85 | 0.61 |  
+| 19 | correct | correct | 0.72 | 0.68 |  
+| 20 | correct | error | -0.09 | |  
+| 21 | correct |unprecise | 0.62 | 0.67 |  
+| 22 | correct | correct | 0.61 | 0.68 |  
+| 23 | correct | correct | 0.82 | 0.68 |
 
 2. Generated unrelated QA's
 
-We present the Similarty of the RAG answers, the Retrieval Score and if the Source are over the threshold. We also check by human eye if the answers make sense. 
+We present the Similarty of the RAG answers, the Retrieval Score and if the Source are over the threshold. We also check by human eye if the answers make sense.
 
 Table 2: Results of PubMed unrelated QA's
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| Question | Chat-GPT | RAG | Similarity | Score | Source |
 | --------- | -------- | ------- | ---------- | ----- | -------|
-|     1     | correct  | correct |    0.94    | 0.48  |   Yes  |
-|     2     | correct  | correct |    0.79    | 0.43  |   Yes  |
-|     3     | correct  | correct |    0.86    | 0.36  |    No  |
-|     4     | correct  | correct |    0.83    | 0.26  |    No  |
-|     5     | correct  | correct |    0.95    | 0.53  |   Yes  |
+| 1 | correct | correct | 0.94 | 0.48 | Yes |
+| 2 | correct | correct | 0.79 | 0.43 | Yes |
+| 3 | correct | correct | 0.86 | 0.36 | No |
+| 4 | correct | correct | 0.83 | 0.26 | No |
+| 5 | correct | correct | 0.95 | 0.53 | Yes |
 
 3. Sentiment analysis
 
-We assume that the same answer results in a Similarity of 1, the opposite 0 and a unsure answer of the RAG with 0.5. 
+We assume that the same answer results in a Similarity of 1, the opposite 0 and a unsure answer of the RAG with 0.5.
 
 Table 3: Results of sentiment analysis
-| Question  | Chat-GPT |  RAG    | Similarity | Score | Source |
+| Question | Chat-GPT | RAG | Similarity | Score | Source |
 | --------- | -------- | ------- | ---------- | ----- | -------|
-|     1     |    Yes   |    No   |    0.0     | 0.63  |   Yes  |
-|     2     |    Yes   |   Yes   |    1.0     | 0.70  |   Yes  |
-|     3     |    Yes   |   Yes   |    1.0     | 0.71  |   Yes  |
-|     4     |    Yes   |    No   |    0.0     | 0.67  |   Yes  |
-|     5     |    Yes   |  Unsure |    0.5     | 0.79  |   Yes  |
-|     6     |     No   |    No   |    1.0     | 0.76  |   Yes  |
-|     7     |    Yes   |   Yes   |    1.0     | 0.72  |   Yes  |
-|     8     |     No   |  Unsure |    0.5     | 0.66  |   Yes  |
-|     9     |     No   |    No   |    1.0     | 0.63  |   Yes  |
-|    10     |     No   |    No   |    1.0     | 0.77  |   Yes  |
+| 1 | Yes | No | 0.0 | 0.63 | Yes |
+| 2 | Yes | Yes | 1.0 | 0.70 | Yes |
+| 3 | Yes | Yes | 1.0 | 0.71 | Yes |
+| 4 | Yes | No | 0.0 | 0.67 | Yes |
+| 5 | Yes | Unsure | 0.5 | 0.79 | Yes |
+| 6 | No | No | 1.0 | 0.76 | Yes |
+| 7 | Yes | Yes | 1.0 | 0.72 | Yes |
+| 8 | No | Unsure | 0.5 | 0.66 | Yes |
+| 9 | No | No | 1.0 | 0.63 | Yes |
+| 10 | No | No | 1.0 | 0.77 | Yes |
 
 ### Analysis
 
 1. Generation of PubMed related QA's
 
-We compare the answers of the RAG and Chat-GPT in the QAs.json file. 
+We compare the answers of the RAG and Chat-GPT in the QAs.json file.
 
        1. Both answers contain the words "problem-solving," "reasoning," and "ability to learn." However, RAG mentioned that there is no single agreed-upon definition of intelligence in a medical context, while Chat-GPT defines it in the answers.
        2. The answer of RAG refers to the measure of intelligence in an admission process of a medical school, while Chat-GPT is more general and refers to measuring intelligence with an IQ test.
@@ -280,23 +278,23 @@ We compare the answers of the RAG and Chat-GPT in the QAs.json file.
        4. No RAG answer
        5. No RAG answer
        6. RAG cites the same source as in question 2. However, the text does not really summarize the abstract and seems that the source document is not really related to the question. It's more about if specific jobs in medicine need more intelligence, which will be asked later. The Chat-GPT answer is short and precise.
-       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only maintaining intelligence is possible by activating cognitive function with games, reading, etc. It is noticeable that the similarity value is high, even though the answers are opposite. This is a good example of why it's hard to compare the semantics of sentences. The words are similar, but a small negation can change the whole context. 
+       7. Opposite answers. RAG states that it is possible to improve or maintain intelligence of children. Chat-GPT states that it is not possible to improve intelligence, only maintaining intelligence is possible by activating cognitive function with games, reading, etc. It is noticeable that the similarity value is high, even though the answers are opposite. This is a good example of why it's hard to compare the semantics of sentences. The words are similar, but a small negation can change the whole context.
        8. RAG does not answer the question and just prints the abstract of the highest scored document. However, the abstract is on the right topic. It's about research on the change of intelligence by aging. The answer from Chat-GPT goes in the same direction but is shorter.
        9. Both answers are similar.
-       10. Both answers are similar but RAG gives more details. 
+       10. Both answers are similar but RAG gives more details.
        11. Both answers are similar and refer to non-pharmacological methods to improve aspects of cognition.
-       12. Both answers are similar. 
+       12. Both answers are similar.
        13. RAG gives exactly the same answer as in Question 6. But by checking the source, one can see that it is not the abstract. Here we have to double check why the same answer is generated and why it does not look like a summary. However, the topic is correct. Chat-GPT answers short and precise.
        14. Both answers are similar.
        15. Both state that intelligence is associated with better decisions. RAG, however, focuses more on empathy in the decision-making process, while Chat-GPT seems to refer more to an analytical decision-making process.
        16. Both answers state that it is possible to quantify intelligence. RAG refers to the SAT, ACT, and GRE tests, while Chat-GPT refers to more well-known IQ tests.
        17. The answer was not generated completely and seems to have been aborted in between. However, the topic of the referred document is correct. The Chat-GPT answer is similar.
        18. Both answers are similar.
-       19. Both answers are similar. 
+       19. Both answers are similar.
        20. No RAG answer
        21. RAG provides a long answer that is not the abstract of the source. The RAG answer is indecisive and refers to studies with opposite results. It also refers to BMI and not the example disease cardiovascular disease or metabolic disorders from the questions. Chat-GPT answers confidently why these diseases can affect intelligence.
-       22. RAG is again more detailed in the answer. However, both answers are similar. 
-       23. Both answers state that intelligence and cognitive functions differ. 
+       22. RAG is again more detailed in the answer. However, both answers are similar.
+       23. Both answers state that intelligence and cognitive functions differ.
 
 Upon visual inspection, it became evident that the similarity measure is not a reliable indicator for analyzing the semantic content of the QA system. A notable instance is question 7, where despite a high similarity value of 0.8, the answers contain opposing statements. However, the similarity measure can still be used as an initial filter to determine if the answers share common words, which may suggest a shared topic.
 
@@ -315,20 +313,20 @@ We presume that BioMistral can produce accurate answers to non-PubMed-related da
 We observe that 4 out of 10 questions are answered differently.
 In question 1, RAG mentioned that it is not possible to improve intelligence through education and cognitive training. This is interesting because RAG answered question 7 from related QA's in the opposite way. In question 4, it's asked if it is possible to accurately measure intelligence using standardized tests. We think that in this case, RAG is correct in answering the question with no, which means that Chat-GPT is wrong. In question 5, RAG is unsure whether to give a true or false answer. The question is whether socioeconomic factors influence intelligence. We think RAG is correct because it's not really easy to state a yes or no answer to this question. Question 8 asked if intelligence is a fixed trait that remains constant throughout. We again side with RAG and think that the answer is too complex to answer with a simple yes or no.
 
-
 ## Contributions
 
 |                   | Data Retrieval | Data Preprocessing | Data Storage | LLM Model | RAG System | Document Reference | User Interface | Experiments |
 | ----------------- | -------------- | ------------------ | ------------ | --------- | ---------- | ------------------ | -------------- | ----------- |
-| Jonas Gann        |                |                    |              |           |            |                    |                |             |
-| Christian Teutsch |                |          x         |       x      |           |     x      |                    |                |      x      |
-| Saif Mandour      |                |          x         |       x      |     x     |            |        x           |                |      x      |
+| Jonas Gann        | x              | x                  | x            | x         | x          | x                  | x              |             |
+| Christian Teutsch |                | x                  | x            |           | x          |                    |                | x           |
+| Saif Mandour      |                | x                  | x            | x         |            | x                  |                | x           |
 
 ### Jonas Gann
 
 At the beginning of the project I retrieved the data from PubMed and did some experiments how to use embeddings to calculate the similar papers for a given question. I eventually found a working method but still decided to use Pinecone as a vector store and implemented the required API calls. I then started looking into the answer generation using various kinds of methods and LLMs and eventually decided one of the more powerful instruct-models to be the best fit for our use case. During this time I also had to find a way to run the LLMs which led me to test Ollama for my local machine and Google Colab as well as Paperspace for remote GPU computing. Ollama turned out contain very performant models generating good quality answers. So I moved on using Ollama. The next step was to integrate relevant papers into the user prompt. I tried different approaches and prompts which lead to suboptimal behavior but were satisfactory enough to move to the next important feature: the UI. I looked around a bit and found out there were many open-source UIs available for the use case at hand. I decided to use Chat-UI and started to customize it to our needs by integrating the features I previously developed in python notebooks. As the UI is written in TypeScript and I wanted to reuse the python code I settled for the solution of hosting essential features in a REST server. Now that all essential systems were in place I started to iteratively improve each of the system components. This included selection of the superior BioMistral model as well as adjusting the system prompt of the model and the insertion of abstracts into the user prompt. One main challenge was to enable the model to generate references to the papers used in the context. As I found no reliable solution, I manually inserted the references to the papers in the generated answer.
 
 ### Christian Teutsch
+
 At the project's outset, I conducted research into parsing PubMed data and found the Biopython package to be a suitable tool.
 
 We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. The Opensearch vectorbase runs on a local host. I implemented a Jupyter notebook to preprocess the data, create an Opensearch index, and bulk-load the data. The notebook can be found in the Opensearch folder. Additionally, I made some improvements to the RAG system. I worked on the prompting and added the retrieval score of the documents to the output to use it later for thresholding.
@@ -339,21 +337,19 @@ Finally, we had to analyze the RAG system. Saif and I generated a dataset of que
 
 Data Proprocessing and Data Storage went hand in hand when implementing a vector database. The first challenge that faced me is how to populate opensearch with the extracted pubmed records. In the notebook `pubmed_preprocessing.ipynb` together with Christian we setup an opensearch instance locally and used the library biopython to extract paper title, author name, date of publication and the abstract. After creating the sentence embeddings for the abstracts and saving them, we faced a challenge of how to populate the `pub_med_index`. For that we wrote a bulk operation that populates the database in one request. For Document retrieval we needed to define a K-Nearest-Neighbor (KNN) query, which we tested for k=5 and got satisfying results.
 
-For the final project we decided to mainly use pinecone as the main vector space. I decided to help looking for the LLM that suits our problem the best. As specified in the `.env.template` file, I tried out different models like Mistral, Llama2 and openchat, which is an LLM based on Llama. At  the end we opted for Biomistral, which is an open source LLM pretrained using Pubmed data. Perfect for our needs. However, we noticed when evaluating the model, that the knowledge cutoff was mitigated by our RAG system.
+For the final project we decided to mainly use pinecone as the main vector space. I decided to help looking for the LLM that suits our problem the best. As specified in the `.env.template` file, I tried out different models like Mistral, Llama2 and openchat, which is an LLM based on Llama. At the end we opted for Biomistral, which is an open source LLM pretrained using Pubmed data. Perfect for our needs. However, we noticed when evaluating the model, that the knowledge cutoff was mitigated by our RAG system.
 
 When working on document referencing in generated answers, I noticed that our model just outputs on the title of the most relevant document and not the source. I looked into the data to find a pattern in the source "SO" of the retrieved documents and decided to create a website link out of it. Each document had a "[doi]" tag in the sources, so replacing it with an http request created a reliable and clean document reference with a website link to read more about the paper. For document reference I mainly worked with `pineconeEndpoint.py`.
 
 To evaluate the chatbot Christian and I generated a list of questions and answers with ChatGPT-3.5 and compared the answers with the answers of our chatbot as specified in the Evaluation section. The evaluation showed us mistakes and improvement potential which will be adressed in the future work section. An obvious problem, was that in the preprocessing phase some document sources weren't collected, which led to an error when trying to reference those document without a source at hand.
 
-Finally I looked into preparing the chatbot for production and setting up the tools needed for that. As specified in the deployment section, I ran into problems with containerizing the whole chatbot into one image, but we managed to let mongodb run in a docker image reliably. 
-
+Finally I looked into preparing the chatbot for production and setting up the tools needed for that. As specified in the deployment section, I ran into problems with containerizing the whole chatbot into one image, but we managed to let mongodb run in a docker image reliably.
 
 ## Conclusion and Future Work
 
 We were able to develop a working system capable of answering medical questions based on papers retrieved from PubMed. Some shortcomings of our system are, that we were only able to use the most relevant paper for a given question as context for the answer generation. It would technically be no problem to insert more abstracts but one would have to further optimize the model configuration such that the model generates a suitable answer not falling back to a list of paper summaries. We also were not able to automatically insert references to the papers used in the context. This would be a very useful feature and we would be very interested in future research in this area. For actual productive deployment of our system we would also have to perform some additional optimizations such as the implementation of a docker container for the nodejs application and utilization of an actual database for the RAG system.
 
-One possible improvement is preprocessing the pubmed_data while enforcing the source to exist in each document, so we avoid any document retrieval conflicts where the document source does not exist and only the abstract. 
-
+One possible improvement is preprocessing the pubmed_data while enforcing the source to exist in each document, so we avoid any document retrieval conflicts where the document source does not exist and only the abstract.
 
 ## Anti-plagiarism Confirmation
 
@@ -378,7 +374,6 @@ topic mentioned above
 [^10]: https://python.langchain.com/docs/langserve
 [^11]: https://github.com/open-webui/open-webui
 [^12]: https://github.com/huggingface/chat-ui
-
 [^13]:
     Lewis, Perez, Piktus. Retrieval-augmented generation for knowledge-intensive nlp tasks. Advances in Neural Information Processing Systems, 2020.
     https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
