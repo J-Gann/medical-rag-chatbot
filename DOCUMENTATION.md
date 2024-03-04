@@ -328,8 +328,9 @@ Finally I looked into preparing the chatbot for production and setting up the to
 
 ## Conclusion and Future Work
 
-### Opensearch
 
+### Possible improvements
+The first possible improvement is preprocessing the pubmed_data while enforcing the source to exist in each document, so we avoid any document retrieval conflicts where the document source does not exist and only the abstract. 
 
 - recap main contributions
 - reflect on limitations
