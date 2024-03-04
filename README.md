@@ -3,7 +3,7 @@
 |                   | GitHub Handle | E-Mail                       | Course of Study           | Matriculation Number |
 | ----------------- | ------------- | ---------------------------- | ------------------------- | -------------------- |
 | Jonas Gann        | @J-Gann       | gann@stud.uni-heidelberg.de  | Data and Computer Science | 3367576              |
-| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de |                           |                      |
+| Christian Teutsch | @chTeut       | christian.teutsch@outlook.de | Data and Computer Science | 3729420              |
 | Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
 Advisor:
