@@ -134,11 +134,13 @@ Here we were able to not only customize the models available to the user in a co
 
 ![UI with answer](evaluation/images/prompt.png)
 
-### Deployment
+
+## Collaboration
 
 We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. The Docker file can still be found `chat-ui-rag/Dockerfile`, but it didn't run as intended, because the build files weren't found. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example.
 
 ### Development
+
 
 The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to experiment with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
@@ -312,11 +314,23 @@ At the beginning of the project I retrieved the data from PubMed and did some ex
 
 ### Saif Mandour
 
-Data Preprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand.
+Data Proprocessing and Data Storage went hand in hand when implementing a vector database. The first challenge that faced me is how to populate opensearch with the extracted pubmed records. In the notebook `pubmed_preprocessing.ipynb` together with Christian we setup an opensearch instance locally and used the library biopython to extract paper title, author name, date of publication and the abstract. After creating the sentence embeddings for the abstracts and saving them, we faced a challenge of how to populate the `pub_med_index`. For that we wrote a bulk operation that populates the database in one request. For Document retrieval we needed to define a K-Nearest-Neighbor (KNN) query, which we tested for k=5 and got satisfying results.
+
+For the final project we decided to mainly use pinecone as the main vector space. I decided to help looking for the LLM that suits our problem the best. As specified in the `.env.template` file, I tried out different models like Mistral, Llama2 and openchat, which is an LLM based on Llama[^26]. At  the end we opted for Biomistral, which is an open source LLM pretrained using Pubmed data. Perfect for our needs. However, we noticed when evaluating the model, that the knowledge cutoff was mitigated by our RAG system.
+
+When working on document referencing in generated answers, I noticed that our model just outputs on the title of the most relevant document and not the source. I looked into the data to find a pattern in the source "SO" of the retrieved documents and decided to create a website link out of it. Each document had a "[doi]" tag in the sources, so replacing it with an http request created a reliable and clean document reference with a website link to read more about the paper. For document reference I mainly worked with `pineconeEndpoint.py`.
+
+To evaluate the chatbot Christian and I generated a list of questions and answers with ChatGPT-3.5 and compared the answers with the answers of our chatbot as specified in the Evaluation section. The evaluation showed us mistakes and improvement potential which will be adressed in the future work section. An obvious problem, was that in the preprocessing phase some document sources weren't collected, which led to an error when trying to reference those document without a source at hand.
+
+Finally I looked into preparing the chatbot for production and setting up the tools needed for that. As specified in the deployment section, I ran into problems with containerizing the whole chatbot into one image, but we managed to let mongodb run in a docker image reliably. 
+
 
 ## Conclusion and Future Work
 
 We were able to develop a working system capable of answering medical questions based on papers retrieved from PubMed. Some shortcomings of our system are, that we were only able to use the most relevant paper for a given question as context for the answer generation. It would technically be no problem to insert more abstracts but one would have to further optimize the model configuration such that the model generates a suitable answer not falling back to a list of paper summaries. We also were not able to automatically insert references to the papers used in the context. This would be a very useful feature and we would be very interested in future research in this area. For actual productive deployment of our system we would also have to perform some additional optimizations such as the implementation of a docker container for the nodejs application and utilization of an actual database for the RAG system.
+
+One possible improvement is preprocessing the pubmed_data while enforcing the source to exist in each document, so we avoid any document retrieval conflicts where the document source does not exist and only the abstract. 
+
 
 ## Anti-plagiarism Confirmation
 
@@ -341,6 +355,7 @@ topic mentioned above
 [^10]: https://python.langchain.com/docs/langserve
 [^11]: https://github.com/open-webui/open-webui
 [^12]: https://github.com/huggingface/chat-ui
+
 [^13]:
     Lewis, Perez, Piktus. Retrieval-augmented generation for knowledge-intensive nlp tasks. Advances in Neural Information Processing Systems, 2020.
     https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
