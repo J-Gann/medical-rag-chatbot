@@ -42,9 +42,12 @@ See the [Documentation](./DOCUMENTATION.md) for more information.
 
 - start chat-ui dev server using `cd chat-ui-rag && npm run dev`
 
+- to start production chat-ui server run `cd chat-ui-rag && npm run build && pm2 start ecosystem.config.cjs`
+
 ### Access
 
-- access chat-ui with browser at http://localhost:5173
+- access dev chat-ui with browser at http://localhost:5173
+- access production chat-ui at http://localhost:8080
 
 ## Repository Overview
 

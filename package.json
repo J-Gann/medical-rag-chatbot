@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ronin-mocks": "^0.1.11",
+    "ronin-server": "^0.1.3"
+  }
+}
