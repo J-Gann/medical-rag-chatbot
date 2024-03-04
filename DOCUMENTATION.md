@@ -326,12 +326,7 @@ Data Proprocessing and Data Storage went hand in hand when implementing a vector
 
 ## Conclusion and Future Work
 
-### Deployment
-
-- recap main contributions
-- reflect on limitations
-- possible improvements / expansions
-- what have we learned?
+We were able to develop a working system capable of answering medical questions based on papers retrieved from PubMed. Some shortcomings of our system are, that we were only able to use the most relevant paper for a given question as context for the answer generation. It would technically be no problem to insert more abstracts but one would have to further optimize the model configuration such that the model generates as suitable answer not falling back to a list of paper summaries. We also were not able to automatically insert references to the papers used in the context. This would be a very useful feature and we would be very interested in future research in this area. For actual productive deployment of our system we would also have to perform some additional optimizations such as the implementation of a docker container for the nodejs application and utilization of an actual database for the RAG system.
 
 ## Anti-plagiarism Confirmation
 
