@@ -333,6 +333,8 @@ In question 1, RAG mentioned that it is not possible to improve intelligence thr
 ### Jonas Gann
 
 ### Christian Teutsch
+At the beginning of the project I did some investigations how to parse the PubMed data and found the biopython package as a suitable tool. 
+We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. Additionally, I implemented pre-processing in the Opensearch folder. I also made some modifications to the RAG, such as pre-prompting and including metadata like the retrieval score. Saif and I conducted the experiments together, and I analyzed the results. 
 
 ### Saif Mandour
 Data Proprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand. 
