@@ -6,7 +6,7 @@
 | Christian Teutsch | @chTeut       | christian.teutsch@outlook.de | Data and Computer Science | 3729420              |
 | Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
-Advisor:
+Advisor: Robin Khanna
 
 This repository contains a medical chatbot using a finetuned LLM and RAG system on a Pubmed dataset.
 

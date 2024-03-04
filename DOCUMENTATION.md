@@ -6,7 +6,7 @@
 | Christian Teutsch | @chTeut       | christian.teutsch@outlook.de | Data and Computer Science | 3729420              |
 | Saif Mandour      | @saifmandour  | saifmandour@gmail.com        | Computer Science          | 4189231              |
 
-Advisor:
+Advisor: Robin Khanna
 
 ## Introduction
 
@@ -26,15 +26,15 @@ This section presents previous work, relevant for our project. As this was a sof
 Lewis et al. Introduced the RAG approach for natural language processing (NLP) tasks in a specialized field like the medical topic of our project[^13]. RAG combines the strengths of information retrieval (IR) and generative models, allowing for more accurate and contextually relevant outputs. The system uses an IR component to retrieve relevant information from a vector database, which is then used to augment the input to a LLM.  
 The idea of using vectors to represent documents is not new and was utilized in the context of information retrieval long before. Salton et al. introduced a vector space model for automatic indexing as early as 1975[^14]. The vector space model (VSM) represents documents in a high-dimensional space, with each dimension corresponding to a term in the vocabulary. The value in each vector represents the frequency of the corresponding term.  
 The concept of representing words or documents as vectors has evolved over time. Tomas Mikolov et al. Introduced the Word2Vec algorithm, which is a neural network-based approach for learning word embeddings from large text corpora[^15]. The key idea behind Word2Vec is to train a neural network to predict the context of a word based on its surrounding words in a sentence. The resulting word embeddings capture the semantic relationships between words.  
-Jeffrey Penning et al. introduced a similar approach in their paper[^16]. The key idea behind GloVe is to learn word embeddings by capturing the co-occurrence statistics of words in a corpus. The algorithm constructs a co-occurrence matrix that represents the frequency of word pairs occurring together in a context window. This matrix is then factorized to obtain word embeddings that capture the semantic relationships between words. 
-These are two examples how to embed language into a vector representation. These word embeddings can be stored in the vector database like Pinecone[^5] or Opensearch[^6] where a similarity measure, such as cosine similarity or Euclidean distance, is used to compute the similarity between the query document and each document in the database.  A k-Nearest Neighbors (k-NN) algorithm is applied to the computed similarities to retrieve the k most similar documents to the query document. The k nearest neighbors are the documents with the highest similarity scores. 
+Jeffrey Penning et al. introduced a similar approach in their paper[^16]. The key idea behind GloVe is to learn word embeddings by capturing the co-occurrence statistics of words in a corpus. The algorithm constructs a co-occurrence matrix that represents the frequency of word pairs occurring together in a context window. This matrix is then factorized to obtain word embeddings that capture the semantic relationships between words.
+These are two examples how to embed language into a vector representation. These word embeddings can be stored in the vector database like Pinecone[^5] or Opensearch[^6] where a similarity measure, such as cosine similarity or Euclidean distance, is used to compute the similarity between the query document and each document in the database. A k-Nearest Neighbors (k-NN) algorithm is applied to the computed similarities to retrieve the k most similar documents to the query document. The k nearest neighbors are the documents with the highest similarity scores.
 
-Touvren et al. trained large transformers on large quantity of textual data and made the models publicly available to the research community[^17]. Transformers are an groundbraking architecture introduced by Ashish Vaswani et al.[^18]. The key innovation in the Transformer architecture is the use of self-attention mechanisms, which allow the model to focus on different parts of the input sequence when generating the output sequence. Parallel processing of the input sequence enabled the training of models on massive datasets, as demonstrated in[^17]. 
-The availability of open-source models has encouraged the development of streamlined tools like Ollama[^8], designed to run these models locally. Ollama provided access to BioMistral, a model which was introduced by Morin et al.[^19]. BioMistral is based on Mistral, a 7-billion-parameter llm introduced by Jian et al.[^20]. Despite having fewer parameters, it outperforms high-performing language models like Llama 1 and Llama 2, which have 13 billion and 34 billion parameters, respectively. Morin et al. fine-tuned their model on the free-accessable PubMed Central database which contains wide range of scientific research articles from the MEDLINE database[^1]. The United States National Library of Medicine (NLM) at the National Institutes of Health (NIH) maintains the MEDLINE database as part of the Entrez system of information retrieval.  
+Touvren et al. trained large transformers on large quantity of textual data and made the models publicly available to the research community[^17]. Transformers are an groundbreaking architecture introduced by Ashish Vaswani et al.[^18]. The key innovation in the Transformer architecture is the use of self-attention mechanisms, which allow the model to focus on different parts of the input sequence when generating the output sequence. Parallel processing of the input sequence enabled the training of models on massive datasets, as demonstrated in[^17].
+The availability of open-source models has encouraged the development of streamlined tools like Ollama[^8], designed to run these models locally. Ollama provided access to BioMistral, a model which was introduced by Morin et al.[^19]. BioMistral is based on Mistral, a 7-billion-parameter llm introduced by Jian et al.[^20]. Despite having fewer parameters, it outperforms high-performing language models like Llama 1 and Llama 2, which have 13 billion and 34 billion parameters, respectively. Morin et al. fine-tuned their model on the free-accessible PubMed Central database which contains wide range of scientific research articles from the MEDLINE database[^1]. The United States National Library of Medicine (NLM) at the National Institutes of Health (NIH) maintains the MEDLINE database as part of the Entrez system of information retrieval.
 
-To make our RAG system accessible for users, we take advantage of Hugging Face, an open-source community focused on NLP and machine learning (ML). Hugging Face offers a chat interface called Chat-UI, the source code is accessible and can be customized[^12]. Chat-UI is build by SvelteKit, a framework for building web applications and websites using the Svelte framework[^21]. It provides a range of features for building web applications, including a compiler that generates highly optimized JavaScript code, a component-based architecture, and a reactive data store. 
+To make our RAG system accessible for users, we take advantage of Hugging Face, an open-source community focused on NLP and machine learning (ML). Hugging Face offers a chat interface called Chat-UI, the source code is accessible and can be customized[^12]. Chat-UI is build by SvelteKit, a framework for building web applications and websites using the Svelte framework[^21]. It provides a range of features for building web applications, including a compiler that generates highly optimized JavaScript code, a component-based architecture, and a reactive data store.
 
-Another important technology we used is Docker, a platform for developing, shipping, and running applications using containerization[^22]. A Dockerfile contains instructions for building a Docker image. The Docker image is a standalone package that contains the application and all of its dependencies. An instance of the image can be run as a Docker container on a host machine. This process simplifies the running of an application due to the pre-definition of dependencies, which is a common problem when running an application on another host machine. 
+Another important technology we used is Docker, a platform for developing, shipping, and running applications using containerization[^22]. A Dockerfile contains instructions for building a Docker image. The Docker image is a standalone package that contains the application and all of its dependencies. An instance of the image can be run as a Docker container on a host machine. This process simplifies the running of an application due to the pre-definition of dependencies, which is a common problem when running an application on another host machine.
 
 ## Methods and Approach
 
@@ -59,8 +59,8 @@ As mentioned in the previous section, we already filtered the data to be publish
 ### Vector Storage
 
 In order to query relevant papers for a given user question, we decided to compute an embedding for each paper. These embedding store the semantic content of a paper in form of a vector. One can calculate the cosine similarity between embeddings of the paper-abstracts and the embedding of a user question to find papers with similar content to the question. To further improve the semantic content of the embedding, one could not only incorporate the abstract of the paper into the embedding but also relevant metadata such as the names of the authors as well as the publication date.
-Once ambeddings are pre-computed for all papers, they can be used to find relevant papers for all coming user questions by computing their embedding similarity. There exist specialized software tools which make these computations easy and efficient. One of the so called "vectorstores" is Pinecone[^5]. It enables cloud storage of embeddings and provides an API for easily querying the top-k most similar embeddings for a given user question.
-The alternative to a fully hosted service such as Pinecone is to use a locally running system like OpenSearch[^6]. It is highly costumizable and enables storing embeddings with the sources. The REST API makes is easy to query the top-k similar embeddings and because it runs locally it runs much faster than for document retrival and later references.
+Once embeddings are pre-computed for all papers, they can be used to find relevant papers for all coming user questions by computing their embedding similarity. There exist specialized software tools which make these computations easy and efficient. One of the so called "vectorstores" is Pinecone[^5]. It enables cloud storage of embeddings and provides an API for easily querying the top-k most similar embeddings for a given user question.
+The alternative to a fully hosted service such as Pinecone is to use a locally running system like OpenSearch[^6]. It is highly customizable and enables storing embeddings with the sources. The REST API makes is easy to query the top-k similar embeddings and because it runs locally it runs much faster than for document retrieval and later references.
 
 <!-- MORE about OpenSearch -->
 
@@ -81,7 +81,7 @@ We found BioMistral to be a perfect fit and fulfill all our expectations. Due to
 We eventually settled for the following system prompt for the BioMistral model:
 
 ```js
-"You are a medical assistant. Answer questions truthfully. Base your answer soly on the given information.";
+"You are a medical assistant. Answer questions truthfully. Base your answer soley on the given information.";
 ```
 
 ### RAG System
@@ -128,28 +128,19 @@ As we only use at most one paper for a question, we were able to manually append
 
 We decided to not write a custom user interface as there were many open-source user interfaces available for the use case at hand. We initially looked at user interfaces in the context of Ollama such as Open WebUI[^11]. However this turned out not to be sufficiently expandable in order to incorporate our RAG system. Therefore we decided to use the extensively customizable Chat-UI[^12].
 
-Here we were able to not only customize the models available to the user in a configuration file but also insert custom code, adding new features to the answer generation pipeline. This most notably concerns the ["buildPrompt.ts"](./chat-ui-rag/src/lib/buildPrompt.ts) file in which the main logic regarding the enrichment of the user prompt is contained. Here we added the option to insert papers retrieved by the RAG system as described in the previous chapter. We added a "rag" configuration option to the [".env"](./chat-ui-rag/.env) file to enable the integrator to turn the RAG system on and off. Additionally we wanted the vector store to also be replacable as we saw no need to hardcode the usage of Pinecone. Thats why we added the option "vectorStoreType" as well as "url" to enable configuration of different vector stores. To use a different vector store one would have to implement an adapter for the new vector store and implement the corresponding endpoint similar to the ["PineconeEndpoint](./chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.ts) and add a new case to the ["RAGEndpoint](./chat-ui-rag/src/lib/server/rag/ragEndpoint.ts). This way we provided two vector stores: Pinecone and OpenSearch.
+Here we were able to not only customize the models available to the user in a configuration file but also insert custom code, adding new features to the answer generation pipeline. This most notably concerns the ["buildPrompt.ts"](./chat-ui-rag/src/lib/buildPrompt.ts) file in which the main logic regarding the enrichment of the user prompt is contained. Here we added the option to insert papers retrieved by the RAG system as described in the previous chapter. We added a "rag" configuration option to the [".env"](./chat-ui-rag/.env) file to enable the integrator to turn the RAG system on and off. Additionally we wanted the vector store to also be replaceable as we saw no need to hardcode the usage of Pinecone. Thats why we added the option "vectorStoreType" as well as "url" to enable configuration of different vector stores. To use a different vector store one would have to implement an adapter for the new vector store and implement the corresponding endpoint similar to the ["PineconeEndpoint](./chat-ui-rag/src/lib/server/rag/pinecone/pineconeEndpoint.ts) and add a new case to the ["RAGEndpoint](./chat-ui-rag/src/lib/server/rag/ragEndpoint.ts). This way we provided two vector stores: Pinecone and OpenSearch.
 
 ![Welcome Page](evaluation/images/welcome.png)
 
 ![UI with answer](evaluation/images/prompt.png)
 
 ### Deployment
-We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. The Docker file can still be found `chat-ui-rag/Dockerfile`, but it didn't run as intended, because the build files weren't found. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example. 
+
+We decided to only run the mongo database in a docker container and the nodejs application locally. Because of the complexity of the project much of the time went into implementing the RAG and little time was left to make a docker container for the nodejs[^23] application. The Docker file can still be found `chat-ui-rag/Dockerfile`, but it didn't run as intended, because the build files weren't found. Nodejs is an opensource javascript framework which allows server-side javascript execution. A useful feature is `npm run dev`, which allows a development server to run locally for testing the application. However, we tested running the application in production. We decided to use the resource manager pm2 to run the application. We chose pm2[^24] because it allows the npm application to run as a daemon allowing the application to be easily deployed on a web server with using apache2[^25] for example.
 
 ### Development
 
-The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to expirement with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
-
-- Paperspace
-- Google Colab
-- GitHub
-
-## Collaboration
-
-- Regular meetings
-- What worked, what did not?
-- ...
+The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to experiment with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
 ## Experiments
 
@@ -159,27 +150,28 @@ The data was retrieved as described in the Data Retrieval section. Each entry co
 
 ### Evaluation Method
 
-We used three different evaluation settings. 
+We used three different evaluation settings.
 
-1. Generation of PubMed related questions and answers (QA's) 
+1. Generation of PubMed related questions and answers (QA's)
 
 The QA's pairs are related to the word "intelligence" in the abstract. We used Chat-GPT to generate both questions and answers. We used the answers for the same questions to compare the answers of our RAG system. To do that, we calculate the word embeddings of both answers and calculate the similarity. This is done with the Python scripts answerEmbedding.py and answerSimilarity.py from the /QA-INLPT-WS2023/evaluation folder. The information is stored in QAs.json, and the results are shown in Table 1. We also check the retrieval score the generated question of the RAG system.
 Note, we use a retrieval score threshold to filter sources with a lower retrieval score. 
 
-2. Generated unrelated QA's 
+2. Generated unrelated QA's
 
 We used QA's pairs that are unrelated to a medical context to assess how the BioMistral model, fine-tuned on PubMed data, performs. We are interested in whether the Q&A pairs found reasonable answers and if the RAG system found a source. The results are shown in Table 2.
 
-3. Sentiment analysis 
+3. Sentiment analysis
 
 We compared the sentiment analysis of questions that should be answered with either Yes (positive) or No (negative). The results are shown in Table 3.
 
 ### Experimental Details
-We used the follwing prompts to generate the QA's in Chat-GPT.  Forthermore we set the retrieval score threshold to 0.4. This means that we dont provide the user not source linke if the retrieval score is less than 0.4.
+
+We used the following prompts to generate the QA's in Chat-GPT. Furthermore we set the retrieval score threshold to 0.4. This means that we don´t provide the user a source link if the retrieval score is less than 0.4.
 
 1. Generation of PubMed related QA's
 
-We generated the PubMed related QA's with the follwing prompts.
+We generated the PubMed related QA's with the following prompts.
 
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
@@ -187,7 +179,7 @@ User: "You are a medical assistant. Answer questions truthfully. Base your answe
 
 2. Generated unrelated QA's
 
-We generated the PubMed unrelated QA's with the follwing prompts.
+We generated the PubMed unrelated QA's with the following prompts.
 
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 5 question which has nothing to do with PubMed or any other medical topic."
@@ -195,12 +187,12 @@ User: "Can you answer the 5 questions?"
 
 3. Sentiment analysis
 
-We generated the sentiment analysis QA's with the follwing prompts.
+We generated the sentiment analysis QA's with the following prompts.
 
 User: "Are you familiar with PubMed dataset?"
 User: "Generate 20 questions about the topic of intelligence in a medical context which a medical assistant can answer. "
 User: "You are a medical assistant. Answer questions truthfully. Base your answer solely on PubMed data."
-User: "Can you proviide 10 questions and answers which have a positive or negative answer? It must be possible to answer with yes or no."
+User: "Can you provide 10 questions and answers which have a positive or negative answer? It must be possible to answer with yes or no."
 
 ### Results
 
@@ -308,11 +300,11 @@ Upon visual inspection, it became evident that the similarity measure is not a r
 
 2. Generated unrelated QA's
 
-       1. Both answers are similar, but RAG is more detailed. It also refers to a source with a retrieval score of 0.48. However, the two answers' similarity is higher than all similarities from the related Q&A's. Both answers start with the same eleven letters, which can influence the high similarity score. Also interesting to note is that the provided source document for the RAG is about the workspace of a radiologist, and home office is not mentioned. But both productivity improvement strategies might be similar.
-       2. Both answers are similar, with a similarity score of 0.79. It turns out that the retrieved document has good information to generate an answer, even if the retrieval score is relatively low. The RAG answer is more detailed than the Chat-GPT answer, but both mention similar topics.
-       3. Similar to question 2, the similarity score of the two questions is high. And also the retrieval score is quite low, but the provided answer is detailed and correct.
-       4. Both answers refer to the Roman Empire. We checked the recommended authors and book titles. The author Susan Wise Bauer and the book title recommended from Chat-GPT exist. The author Paul Erdkamp recommended from RAG exists, but we didn't find the book. Only books which are related to the Roman Empire but with other titles. Again RAG is more detailed and recommend other authors as well. Were some exist and some not. 
-       5. Both answers are similar with a similarity score of 0.95. Also the retrieval score higher than the other unrelated questions. 
+   1. Both answers are similar, but RAG is more detailed. It also refers to a source with a retrieval score of 0.48. However, the two answers' similarity is higher than all similarities from the related Q&A's. Both answers start with the same eleven letters, which can influence the high similarity score. Also interesting to note is that the provided source document for the RAG is about the workspace of a radiologist, and home office is not mentioned. But both productivity improvement strategies might be similar.
+   2. Both answers are similar, with a similarity score of 0.79. It turns out that the retrieved document has good information to generate an answer, even if the retrieval score is relatively low. The RAG answer is more detailed than the Chat-GPT answer, but both mention similar topics.
+   3. Similar to question 2, the similarity score of the two questions is high. And also the retrieval score is quite low, but the provided answer is detailed and correct.
+   4. Both answers refer to the Roman Empire. We checked the recommended authors and book titles. The author Susan Wise Bauer and the book title recommended from Chat-GPT exist. The author Paul Erdkamp recommended from RAG exists, but we didn't find the book. Only books which are related to the Roman Empire but with other titles. Again RAG is more detailed and recommend other authors as well. Were some exist and some not.
+   5. Both answers are similar with a similarity score of 0.95. Also the retrieval score higher than the other unrelated questions.
 
 We presume that BioMistral can produce accurate answers to non-PubMed-related data due to its foundation in the underlying Mistral model. It's intriguing to note that the similarity tends to increase with lower retrieval scores. We believe this is because the model incorporates more information from the Mistral model when the retrieved document doesn't supply sufficient information for the given question. It's also noteworthy that the retrieval scores for the generated unrelated QA's are consistently lower than those for the related ones. This indicates that we have correctly generated the QA's, even if they are occasionally tangentially related to medical topics.
 
@@ -332,24 +324,30 @@ In question 1, RAG mentioned that it is not possible to improve intelligence thr
 
 ### Jonas Gann
 
+At the beginning of the project I retrieved the data from PubMed and did some experiments how to use embeddings to calculate the similar papers for a given question. I eventually found a working method but still decided to use Pinecone as a vector store and implemented the required API calls. I then started looking into the answer generation using various kinds of methods and LLMs and eventually decided one of the more powerful instruct-models to be the best fit for our use case. During this time I also had to find a way to run the LLMs which led me to test Ollama for my local machine and Google Colab as well as Paperspace for remote GPU computing. Ollama turned out contain very performant models generating good quality answers. So I moved on using Ollama. The next step was to integrate relevant papers into the user prompt. I tried different approaches and prompts which lead to suboptimal behavior but were satisfactory enough to move to the next important feature: the UI. I looked around a bit and found out there were many open-source UIs available for the use case at hand. I decided to use Chat-UI and started to customize it to our needs by integrating the features I previously developed in python notebooks. As the UI is written in TypeScript and I wanted to reuse the python code I settled for the solution of hosting essential features in a REST server. Now that all essential systems were in place I started to iteratively improve each of the system components. This included selection of the superior BioMistral model as well as adjusting the system prompt of the model and the insertion of abstracts into the user prompt. One main challenge was to enable the model to generate references to the papers used in the context. As I found no reliable solution, I manually inserted the references to the papers in the generated answer.
+
 ### Christian Teutsch
 At the beginning of the project I did some investigations how to parse the PubMed data and found the biopython package as a suitable tool. 
 We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. Additionally, I implemented pre-processing in the Opensearch folder. I also made some modifications to the RAG, such as pre-prompting and including metadata like the retrieval score. Saif and I conducted the experiments together, and I analyzed the results. 
 
 ### Saif Mandour
-Data Proprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand. 
+
+Data Preprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand.
 
 ## Conclusion and Future Work
 
-### Opensearch
-
-### Deployment
-- recap main contributions
-- reflect on limitations
-- possible improvements / expansions
-- what have we learned?
+We were able to develop a working system capable of answering medical questions based on papers retrieved from PubMed. Some shortcomings of our system are, that we were only able to use the most relevant paper for a given question as context for the answer generation. It would technically be no problem to insert more abstracts but one would have to further optimize the model configuration such that the model generates a suitable answer not falling back to a list of paper summaries. We also were not able to automatically insert references to the papers used in the context. This would be a very useful feature and we would be very interested in future research in this area. For actual productive deployment of our system we would also have to perform some additional optimizations such as the implementation of a docker container for the nodejs application and utilization of an actual database for the RAG system.
 
 ## Anti-plagiarism Confirmation
+
+We hereby declare that the assignment on the
+topic mentioned above
+
+1. Is the result of or own independent work,
+2. Makes use of no other sources or materials
+   other than those referenced, and that
+   quotations and paraphrases obtained from
+   the work of others are indicated as such.
 
 [^1]: https://pubmed.ncbi.nlm.nih.gov/
 [^2]: https://biopython.org/
@@ -363,32 +361,40 @@ Data Proprocessing and Data Storage went hand in hand when implementing a vector
 [^10]: https://python.langchain.com/docs/langserve
 [^11]: https://github.com/open-webui/open-webui
 [^12]: https://github.com/huggingface/chat-ui
-[^13]: Lewis, Perez, Piktus. Retrieval-augmented generation for knowledge-intensive nlp tasks. Advances in Neural Information Processing Systems, 2020. 
-       https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
-[^14]: Salton, Wong, Yang. A vector space model for automatic indexing. Communications of the ACM, 1975.
-       https://dl.acm.org/doi/abs/10.1145/361219.361220 
-[^15]: Mikolov, Chen, Corrado. Efficient estimation of word representations in vector space. arXiv preprint arXiv:1301.3781, 2013. 
-       https://arxiv.org/abs/1301.3781 
-[^16]: Pennington, Socher, Manning. Glove: Global vectors for word representation. Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), 2014. 
-       https://aclanthology.org/D14-1162.pdf 
-[^17]: Touvron, Lavril, Izacard. Llama: Open and efficient foundation language models. arXiv preprint arXiv:2302.13971, 2023. 
-       https://arxiv.org/abs/2302.13971 
-[^18]: Vaswani, Shazeer, Parmar. Attention is all you need. Advances in neural information processing systems, 2017. 
-       https://proceedings.neurips.cc/paper/7181-attention-is-all
-[^19]: Labrak, Bazoge, Morin. BioMistral: A Collection of Open-Source Pretrained Large Language Models for Medical Domains. arXiv preprint arXiv:2402.10373, 2023.
-       https://arxiv.org/abs/2402.10373
-[^20]: Jiang, Sablayrolles, Mensch. Mistral 7B. arXiv preprint arXiv:2310.06825, 2023.  
-       https://arxiv.org/abs/2310.06825 
-[^21]: https://kit.svelte.dev/ 
+[^13]:
+    Lewis, Perez, Piktus. Retrieval-augmented generation for knowledge-intensive nlp tasks. Advances in Neural Information Processing Systems, 2020.
+    https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
+
+[^14]:
+    Salton, Wong, Yang. A vector space model for automatic indexing. Communications of the ACM, 1975.
+    https://dl.acm.org/doi/abs/10.1145/361219.361220
+
+[^15]:
+    Mikolov, Chen, Corrado. Efficient estimation of word representations in vector space. arXiv preprint arXiv:1301.3781, 2013.
+    https://arxiv.org/abs/1301.3781
+
+[^16]:
+    Pennington, Socher, Manning. Glove: Global vectors for word representation. Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), 2014.
+    https://aclanthology.org/D14-1162.pdf
+
+[^17]:
+    Touvron, Lavril, Izacard. Llama: Open and efficient foundation language models. arXiv preprint arXiv:2302.13971, 2023.
+    https://arxiv.org/abs/2302.13971
+
+[^18]:
+    Vaswani, Shazeer, Parmar. Attention is all you need. Advances in neural information processing systems, 2017.
+    https://proceedings.neurips.cc/paper/7181-attention-is-all
+
+[^19]:
+    Labrak, Bazoge, Morin. BioMistral: A Collection of Open-Source Pretrained Large Language Models for Medical Domains. arXiv preprint arXiv:2402.10373, 2023.
+    https://arxiv.org/abs/2402.10373
+
+[^20]:
+    Jiang, Sablayrolles, Mensch. Mistral 7B. arXiv preprint arXiv:2310.06825, 2023.  
+     https://arxiv.org/abs/2310.06825
+
+[^21]: https://kit.svelte.dev/
 [^22]: https://www.docker.com/
 [^23]: https://nodejs.org/docs/latest/api/
 [^24]: https://pm2.keymetrics.io/
 [^25]: https://httpd.apache.org/docs/2.4/de/
-
-
-
-
-
-
-
-
