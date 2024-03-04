@@ -141,10 +141,6 @@ We decided to only run the mongo database in a docker container and the nodejs a
 
 The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to expirement with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
-- Paperspace
-- Google Colab
-- GitHub
-
 ## Collaboration
 
 - Regular meetings
@@ -319,7 +315,10 @@ In question 1 RAG mentioned that it is not possible to improve intelligence thro
 ### Christian Teutsch
 
 ### Saif Mandour
-Data Proprocessing and Data Storage went hand in hand when implementing a vector database. Before deciding to use pinecone as the main vector space I took a look at hosting and maintaining an opensearch instance for the crawled pubmed data. I looked mainly into how to index the abstracts with sources and how to implement the a knn for document retrieval. After that was implemented on pineconde I decided to help looking for the LLM that will suit our problem. After deciding to use BioMistral I looked how to have a document reference with a website link for the user to be able to view the source first hand. 
+Data Proprocessing and Data Storage went hand in hand when implementing a vector database. The first challenge that faced me is how to populate opensearch with the extracted pubmed records. In the notebook `pubmed_preprocessing.ipynb` together with Christian we setup an opensearch instance locally and used the library biopython to extract paper title, author name, date of publication and the abstract. After creating the sentence embeddings for the abstracts and saving them, we faced a challenge of how to populate the `pub_med_index`. For that we wrote a bulk operation that populates the database in one request. For Document retrieval we needed to define a K-Nearest-Neighbor (KNN) query, which we tested for k=5 and got satisfying results.
+
+For the final project we decided to mainly use pinecone as the main vector space. I decided to help looking for the LLM that suits our problem the best. As specified in the `.env.template` file, I tried out different models like Mistral, Llama2 and openchat, which is an LLM based on Llama[^26]. At  the end we opted for Biomistral, which is an open source LLM pretrained using Pubmed data. Perfect for our needs. However, we noticed when evaluating the model, that the knowledge cutoff was mitigated by our RAG system.
+
 
 ## Conclusion and Future Work
 
@@ -366,7 +365,7 @@ Data Proprocessing and Data Storage went hand in hand when implementing a vector
 [^23]: https://nodejs.org/docs/latest/api/
 [^24]: https://pm2.keymetrics.io/
 [^25]: https://httpd.apache.org/docs/2.4/de/
-
+[^26]: https://huggingface.co/openchat/openchat
 
 
 
