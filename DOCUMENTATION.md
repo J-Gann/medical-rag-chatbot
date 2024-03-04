@@ -142,7 +142,7 @@ We decided to only run the mongo database in a docker container and the nodejs a
 ### Development
 
 
-The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^25]. This step allowed us to experiment with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
+The development process started locally with jupter notebooks to test data retrieval and data preprocessing. This went without any computational limits. However when the Question Answering phase started, we had to look for GPU machines to handle running models like llama for example. Google Colab's T4 GPU didn't suffice, so we opted for renting a GPU machine on paperspace[^26]. This step allowed us to experiment with different models like llama and biomistral with much quicker responses than locally. We used github for version control and issue tracking.
 
 ## Experiments
 
@@ -413,3 +413,4 @@ topic mentioned above
 [^23]: https://nodejs.org/docs/latest/api/
 [^24]: https://pm2.keymetrics.io/
 [^25]: https://httpd.apache.org/docs/2.4/de/
+[^26]: https://www.paperspace.com/
