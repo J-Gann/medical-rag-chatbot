@@ -86,7 +86,7 @@ We eventually settled for the following system prompt for the BioMistral model:
 
 ### RAG System
 
-Main part of the RAG system is the retrieval of relevant papers for a given user question, which was already introduced as part of the section "Vector Storage". Next to the paper content, the server also includes the similarity score in its response. In case the similarity score is higher than 0.5 (a value we defined after some experiments) the abstract of the paper is inserted into the user prompt as follows:
+Main part of the RAG system is the retrieval of relevant papers for a given user question, which was already introduced as part of the section "Vector Storage". Next to the paper content, the server also includes the similarity score in its response. In case the similarity score is higher than 0.4 (a value we defined after some experiments) the abstract of the paper is inserted into the user prompt as follows:
 
 ```js
 `=====================
@@ -100,7 +100,7 @@ ${abstract}
 ${userQuestion}`;
 ```
 
-If the score is below 0.5, the string "No context available." is inserted instead.
+If the score is below 0.4, the string "No context available." is inserted instead.
 
 We made the design choice to only retrieve and use the most similar paper. The reason is, that in case of multiple papers being inserted in the prompt, we were not able to instruct the llm model to generate a self-contained answer which met our expectations. Instead the answers would usually be a list of summaries of each paper abstract. We were not satisfied with this behavior and decided a consistent answer based on one paper was more appropriate than a list of summaries of relevant papers.
 
@@ -329,8 +329,11 @@ In question 1, RAG mentioned that it is not possible to improve intelligence thr
 At the beginning of the project I retrieved the data from PubMed and did some experiments how to use embeddings to calculate the similar papers for a given question. I eventually found a working method but still decided to use Pinecone as a vector store and implemented the required API calls. I then started looking into the answer generation using various kinds of methods and LLMs and eventually decided one of the more powerful instruct-models to be the best fit for our use case. During this time I also had to find a way to run the LLMs which led me to test Ollama for my local machine and Google Colab as well as Paperspace for remote GPU computing. Ollama turned out contain very performant models generating good quality answers. So I moved on using Ollama. The next step was to integrate relevant papers into the user prompt. I tried different approaches and prompts which lead to suboptimal behavior but were satisfactory enough to move to the next important feature: the UI. I looked around a bit and found out there were many open-source UIs available for the use case at hand. I decided to use Chat-UI and started to customize it to our needs by integrating the features I previously developed in python notebooks. As the UI is written in TypeScript and I wanted to reuse the python code I settled for the solution of hosting essential features in a REST server. Now that all essential systems were in place I started to iteratively improve each of the system components. This included selection of the superior BioMistral model as well as adjusting the system prompt of the model and the insertion of abstracts into the user prompt. One main challenge was to enable the model to generate references to the papers used in the context. As I found no reliable solution, I manually inserted the references to the papers in the generated answer.
 
 ### Christian Teutsch
-At the beginning of the project I did some investigations how to parse the PubMed data and found the biopython package as a suitable tool. 
-We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. Additionally, I implemented pre-processing in the Opensearch folder. I also made some modifications to the RAG, such as pre-prompting and including metadata like the retrieval score. Saif and I conducted the experiments together, and I analyzed the results. 
+At the project's outset, I conducted research into parsing PubMed data and found the Biopython package to be a suitable tool.
+
+We made an early decision to employ a RAG architecture for our QA system. Prior to our introduction to Pinecone in the fourth assignment, Saif and I familiarized ourselves with Opensearch. We implemented a k-NN index mapping, which I later integrated into our final solution (openSearchEndpoint.py) as an alternative to the Pinecone endpoint. The Opensearch vectorbase runs on a local host. I implemented a Jupyter notebook to preprocess the data, create an Opensearch index, and bulk-load the data. The notebook can be found in the Opensearch folder. Additionally, I made some improvements to the RAG system. I worked on the prompting and added the retrieval score of the documents to the output to use it later for thresholding.
+
+Finally, we had to analyze the RAG system. Saif and I generated a dataset of questions using Chat-GPT to compare the answers with our system. We saved the data in the GeneratedQA.md file in the evaluation folder. After we generated the questions and answers, I created three JSON files to store the questions and answers. I implemented the Python scripts answerEmbedding.py and answerSimilarity.py to calculate the embeddings and similarities and added the values to the JSON files. I analyzed the results in the experiments section.
 
 ### Saif Mandour
 
